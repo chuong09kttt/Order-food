@@ -1,4 +1,3 @@
-// URL API của Google Sheets. Bạn cần public Google Sheets và lấy URL phù hợp.
 const sheetUrl = 'https://docs.google.com/spreadsheets/d/1pwAjkmlcBtC7o3qw1jTJBlnqgGRll2pNvblYpvVz1aM/gviz/tq?tqx=out:json';
 
 fetch(sheetUrl)
@@ -8,17 +7,32 @@ fetch(sheetUrl)
         // Chuyển đổi kết quả JSON từ Google Sheets thành định dạng có thể sử dụng
         const json = JSON.parse(data.substr(47).slice(0, -2));
         const rows = json.table.rows;
+        const cols = json.table.cols;  // Lấy thông tin các cột để tạo tiêu đề
 
+        const tableHead = document.querySelector('#ordersTable thead');
         const tableBody = document.querySelector('#ordersTable tbody');
         tableBody.innerHTML = '';
+        tableHead.innerHTML = '';
 
+        // Tạo hàng tiêu đề từ thông tin cột
+        const headerRow = document.createElement('tr');
+        cols.forEach(col => {
+            const headerCell = document.createElement('th');
+            headerCell.textContent = col.label || 'Không có tiêu đề';  // Hiển thị tiêu đề cột hoặc "Không có tiêu đề"
+            headerRow.appendChild(headerCell);
+        });
+        tableHead.appendChild(headerRow);
+
+        // Tạo các hàng dữ liệu
         rows.forEach(row => {
-            const orderTime = row.c[0].v;
-            const orderFood = row.c[1].v;
-            const ordername = row.c[2].v;
-
             const rowElement = document.createElement('tr');
-            rowElement.innerHTML = `<td>${orderTime}</td><td>${orderFood}</td>`;
+            
+            row.c.forEach(cell => {
+                const cellElement = document.createElement('td');
+                cellElement.textContent = cell ? cell.v : '';  // Kiểm tra cell có tồn tại hay không
+                rowElement.appendChild(cellElement);
+            });
+
             tableBody.appendChild(rowElement);
         });
     })
