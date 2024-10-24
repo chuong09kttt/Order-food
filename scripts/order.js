@@ -20,7 +20,7 @@ form.addEventListener('submit', function (event) {
     // Thay thế ENTRY_ID phù hợp với Google Form của bạn
     const data = new URLSearchParams();
     data.append('entry.667562455', selectedFoods.join(', '));
-
+    data.append('entry.352259435', 'Tên khách hàng'); 
     
     fetch(formUrl, {
         method: 'POST',
