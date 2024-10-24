@@ -4,6 +4,7 @@ fetch(sheetUrl)
     .then(res => res.text())
     .then(data => {
         console.log(data);  // In dữ liệu để kiểm tra
+
         // Chuyển đổi kết quả JSON từ Google Sheets thành định dạng có thể sử dụng
         const json = JSON.parse(data.substr(47).slice(0, -2));
         const rows = json.table.rows;
@@ -26,10 +27,12 @@ fetch(sheetUrl)
         // Tạo các hàng dữ liệu
         rows.forEach(row => {
             const rowElement = document.createElement('tr');
-            
-            row.c.forEach(cell => {
+
+            // Đảm bảo mỗi cột đều có dữ liệu hoặc hiển thị ô trống nếu không có dữ liệu
+            cols.forEach((_, index) => {
+                const cell = row.c[index];  // Duyệt qua từng cột bằng chỉ số
                 const cellElement = document.createElement('td');
-                cellElement.textContent = cell ? cell.v : '';  // Kiểm tra cell có tồn tại hay không
+                cellElement.textContent = cell && cell.v ? cell.v : '';  // Hiển thị giá trị nếu có, nếu không để trống
                 rowElement.appendChild(cellElement);
             });
 
