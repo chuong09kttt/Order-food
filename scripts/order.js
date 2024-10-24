@@ -8,7 +8,7 @@ form.addEventListener('submit', function (event) {
     });
 
     // Thay thế bằng URL Google Form của bạn
-    const formUrl = 'https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse';
+    const formUrl = 'https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse';
 
     // Thay thế ENTRY_ID phù hợp với Google Form của bạn
     const data = new URLSearchParams();
