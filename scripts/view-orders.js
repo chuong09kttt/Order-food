@@ -1,5 +1,5 @@
 // URL API của Google Sheets. Bạn cần public Google Sheets và lấy URL phù hợp.
-const sheetUrl = 'https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/gviz/tq?tqx=out:json';
+const sheetUrl = 'https://docs.google.com/spreadsheets/d/1pwAjkmlcBtC7o3qw1jTJBlnqgGRll2pNvblYpvVz1aM/gviz/tq?tqx=out:json';
 
 fetch(sheetUrl)
     .then(res => res.text())
