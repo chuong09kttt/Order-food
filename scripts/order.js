@@ -7,13 +7,21 @@ form.addEventListener('submit', function (event) {
         selectedFoods.push(checkbox.value);
     });
 
+    if (selectedFoods.length === 0) {
+        alert('Vui lòng chọn ít nhất một món ăn.');
+        return;  // Không tiếp tục nếu không có món ăn nào được chọn
+    }
+
+
+    
     // Thay thế bằng URL Google Form của bạn
     const formUrl = 'https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse';
 
     // Thay thế ENTRY_ID phù hợp với Google Form của bạn
     const data = new URLSearchParams();
-    data.append('entry.YOUR_ENTRY_ID_FOR_FOOD', selectedFoods.join(', '));
+    data.append('entry.667562455', selectedFoods.join(', '));
 
+    
     fetch(formUrl, {
         method: 'POST',
         body: data,
