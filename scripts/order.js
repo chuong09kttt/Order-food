@@ -15,7 +15,7 @@ form.addEventListener('submit', function (event) {
 
     
     // Thay thế bằng URL Google Form của bạn
-    const formUrl = 'https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse';
+    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse';
 
     // Thay thế ENTRY_ID phù hợp với Google Form của bạn
     const data = new URLSearchParams();
