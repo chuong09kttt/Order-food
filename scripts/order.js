@@ -26,7 +26,7 @@ form.addEventListener('submit', function (event) {
     data.append('entry.352259435', customerName);  // Tên khách hàng
 
     // Hiển thị tên khách hàng và các món ăn đã chọn
-    alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
+    //alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
 
     // Gửi dữ liệu lên Google Forms
     fetch(formUrl, {
