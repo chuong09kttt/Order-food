@@ -20,13 +20,13 @@ form.addEventListener('submit', function (event) {
     // URL Google Form của bạn
     const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse';
 
-    // Thay thế ENTRY_ID phù hợp với Google Form của bạn
+    // Tạo đối tượng data để gửi
     const data = new URLSearchParams();
-    data.append('entry.667562455', selectedFoods.join(', '));  // Món ăn
+    data.append('entry.667562455', selectedFoods.join(', '));  // Gửi nhiều món ăn
     data.append('entry.352259435', customerName);  // Tên khách hàng
 
     // Hiển thị tên khách hàng và các món ăn đã chọn
-    //alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
+    alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
 
     // Gửi dữ liệu lên Google Forms
     fetch(formUrl, {
