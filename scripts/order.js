@@ -39,3 +39,35 @@ form.addEventListener('submit', function (event) {
         alert('Đã xảy ra lỗi khi gửi đơn hàng: ' + error);
     });
 });
+
+    // Thêm detail
+function increaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    let quantity = parseInt(quantityInput.value);
+    quantityInput.value = quantity + 1;
+}
+
+function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    let quantity = parseInt(quantityInput.value);
+    if (quantity > 1) {
+        quantityInput.value = quantity - 1;
+    }
+}
+
+function addToOrder(itemName, itemPrice) {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const orderItem = {
+        name: itemName,
+        price: itemPrice,
+        quantity: quantity
+    };
+
+    // Lưu thông tin vào localStorage (hoặc gửi lên server nếu cần)
+    let order = JSON.parse(localStorage.getItem('order')) || [];
+    order.push(orderItem);
+    localStorage.setItem('order', JSON.stringify(order));
+
+    alert(`Đã thêm ${itemName} - Số lượng: ${quantity} vào đơn hàng!`);
+}
+
