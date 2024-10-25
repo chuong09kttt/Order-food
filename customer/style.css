@@ -55,3 +55,41 @@ button[type="submit"] {
         max-width: 150px; /* Thu nhỏ ảnh trên thiết bị nhỏ */
     }
 }
+
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+}
+
+.menu-detail {
+    text-align: center;
+    margin: 20px;
+}
+
+.menu-detail-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
