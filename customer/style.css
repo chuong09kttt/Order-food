@@ -19,3 +19,32 @@ input[type="submit"] {
     padding: 10px 20px;
     cursor: pointer;
 }
+
+/* Đảm bảo ảnh có tỷ lệ cố định và responsive */
+.menu-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Khoảng cách giữa các món ăn */
+    justify-content: center;
+}
+
+.menu-item {
+    width: 100%;
+    max-width: 200px; /* Kích thước tối đa của mỗi món */
+    text-align: center;
+}
+
+.menu-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px; /* Giới hạn chiều cao */
+    object-fit: cover; /* Đảm bảo ảnh hiển thị đầy đủ mà không bị biến dạng */
+    border-radius: 8px; /* Tùy chọn làm góc ảnh mềm mại */
+}
+
+/* Điều chỉnh khi trên màn hình nhỏ */
+@media (max-width: 600px) {
+    .menu-item {
+        max-width: 150px; /* Thu nhỏ ảnh trên thiết bị nhỏ */
+    }
+}
