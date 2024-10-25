@@ -3,24 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Món Ăn</title>
+    <title>Menu Café</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Đặt Món Ăn</h1>
-    <form id="orderForm">
-        <label for="customerName">Tên khách hàng:</label><br>
-        <input type="text" id="customerName" name="customerName" required><br><br>
+    <header>
+        <h1>Café Delight</h1>
+        <p>Hotline: 0123456789</p>
+    </header>
 
-        <label>Chọn món ăn:</label><br>
-        <input type="checkbox" name="food" value="Phở"> Phở<br>
-        <input type="checkbox" name="food" value="Bún chả"> Bún chả<br>
-        <input type="checkbox" name="food" value="Cơm tấm"> Cơm tấm<br>
-        <input type="checkbox" name="food" value="Gỏi cuốn"> Gỏi cuốn<br><br>
-        
-        <input type="submit" value="Gửi đơn hàng">
-    </form>
+    <section>
+        <h2>Thông tin đặt hàng</h2>
+        <form id="orderForm">
+            <label for="tableNumber">Số thứ tự bàn:</label><br>
+            <input type="number" id="tableNumber" name="tableNumber" required><br><br>
 
-    <script src="../scripts/order.js"></script>
+            <label for="customerName">Tên khách hàng:</label><br>
+            <input type="text" id="customerName" name="customerName" required><br><br>
+
+            <label for="phoneNumber">Số điện thoại:</label><br>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required><br><br>
+
+            <h2>Menu món ăn</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="images/pho.jpg" alt="Phở">
+                    <p>Phở - 50,000 VND</p>
+                    <label>Số lượng:</label>
+                    <input type="number" name="quantity_pho" min="0" max="10" value="0">
+                </div>
+                <div class="menu-item">
+                    <img src="images/buncha.jpg" alt="Bún chả">
+                    <p>Bún chả - 45,000 VND</p>
+                    <label>Số lượng:</label>
+                    <input type="number" name="quantity_buncha" min="0" max="10" value="0">
+                </div>
+                <div class="menu-item">
+                    <img src="images/comtam.jpg" alt="Cơm tấm">
+                    <p>Cơm tấm - 40,000 VND</p>
+                    <label>Số lượng:</label>
+                    <input type="number" name="quantity_comtam" min="0" max="10" value="0">
+                </div>
+                <div class="menu-item">
+                    <img src="images/goicuon.jpg" alt="Gỏi cuốn">
+                    <p>Gỏi cuốn - 30,000 VND</p>
+                    <label>Số lượng:</label>
+                    <input type="number" name="quantity_goicuon" min="0" max="10" value="0">
+                </div>
+            </div><br>
+
+            <label>Phương thức thanh toán:</label><br>
+            <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
+            <label for="cash">Tiền mặt</label><br>
+            <input type="radio" id="bankTransfer" name="paymentMethod" value="Chuyển khoản">
+            <label for="bankTransfer">Chuyển khoản</label><br><br>
+
+            <input type="submit" value="Xác nhận đơn hàng">
+        </form>
+    </section>
+
+    <script src="scripts/order.js"></script>
 </body>
 </html>
