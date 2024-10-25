@@ -19,6 +19,13 @@ input[type="submit"] {
     padding: 10px 20px;
     cursor: pointer;
 }
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 
 /* Đảm bảo ảnh có tỷ lệ cố định và responsive */
 .menu-grid {
