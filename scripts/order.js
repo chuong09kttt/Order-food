@@ -29,10 +29,19 @@ form.addEventListener('submit', function (event) {
 
     // Tạo đối tượng data để gửi
     const data = new URLSearchParams();
-    data.append('entry.667562455', selectedFoods.join(', '));  // Gửi nhiều món ăn
-    data.append('entry.352259435', customerName);  // Tên khách hàng
-    data.append('entry.123456789', tableNumber); // Số thứ tự bàn (thay đổi entry ID cho đúng)
-    data.append('entry.987654321', phoneNumber); // Số điện thoại (thay đổi entry ID cho đúng)
+    data.append('entry.77411834', phoneNumber);  // SDT
+    data.append('entry.1357572145', tableNumber); // Số thứ tự bàn (thay đổi entry ID cho đúng)
+    data.append('entry.1433881729', customerName); // tên khách hàng
+    data.append('entry.974872402', pho); // Phở
+    data.append('entry.687928994', buncha); // Bún chả
+    data.append('entry.1698670265', comtam); // cơm tấm
+    data.append('entry.1740240441', goicuon); // gỏi cuốn
+    data.append('entry.701833790', sinhtobo); // sinh tố bơ
+    data.append('entry.2145223647', camep); // cam ép
+    data.append('entry.261073239', tiger); // bia tiger
+    data.append('entry.885982600', cafesua); // cafe sữa
+
+    
 
     // Hiển thị tên khách hàng và các món ăn đã chọn
     alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
