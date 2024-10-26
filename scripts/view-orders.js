@@ -42,3 +42,64 @@ fetch(sheetUrl)
     .catch(error => {
         console.error('Lỗi khi lấy dữ liệu từ Google Sheets: ', error);
     });
+
+// Hàm để tải dữ liệu đơn hàng từ server
+async function loadOrders() {
+    try {
+        const response = await fetch('/api/getOrders'); // Đảm bảo endpoint đúng với server của bạn
+        const orders = await response.json();
+
+        const tableBody = document.querySelector('#ordersTable tbody');
+        tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${order.time}</td><td>${order.item}</td>`;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error loading orders:', error);
+    }
+}
+
+// Hàm xóa dữ liệu trong ngày
+async function clearDailyData() {
+    try {
+        const response = await fetch('/api/clearDailyData', { method: 'DELETE' });
+        if (response.ok) {
+            alert('Dữ liệu trong ngày đã được xóa.');
+            loadOrders(); // Tải lại dữ liệu sau khi xóa
+        } else {
+            alert('Không thể xóa dữ liệu.');
+        }
+    } catch (error) {
+        console.error('Error clearing daily data:', error);
+    }
+}
+
+// Hàm xuất dữ liệu ra file Excel
+async function exportToExcel() {
+    try {
+        const response = await fetch('/api/exportToExcel');
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'orders.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            alert('Không thể xuất dữ liệu.');
+        }
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}
+
+// Thêm sự kiện cho các nút
+document.getElementById('clearDailyData').addEventListener('click', clearDailyData);
+document.getElementById('exportToExcel').addEventListener('click', exportToExcel);
+
+// Cập nhật dữ liệu mỗi 5 giây
+setInterval(loadOrders, 5000);
