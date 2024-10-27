@@ -12,27 +12,53 @@
         <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
         <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
         <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
-        <p><strong>Phương thức thanh toán:</strong> <span id="paymentMethod"></span></p>
-        
+           
     </div>
+    
+    <h3>Phương thức thanh toán:</h3>
+    <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
+    <label for="cash">Tiền mặt</label><br>
+    <input type="radio" id="bankTransfer" name="paymentMethod" value="Chuyển khoản" required>
+    <label for="bankTransfer">Chuyển khoản (với mã QR)</label>
+    
+    <div id="qrCodeSection" style="display: none; margin-top: 15px;">
+        <p>Quý khách vui lòng quét mã QR để chuyển khoản:</p>
+        <img src="images/qr-code.png" alt="Mã QR Ngân Hàng" style="width: 150px; height: 150px;">
+        <div style="margin-top: 10px;">
+            <input type="checkbox" id="transferConfirmed">
+            <label for="transferConfirmed">Tôi đã hoàn tất chuyển khoản</label>
+        </div>
+    </div>
+    
     <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
     <script>
         // Lấy dữ liệu từ localStorage
-        const customerName = localStorage.getItem('customerName');
-        const tableNumber = localStorage.getItem('tableNumber');
-        const phoneNumber = localStorage.getItem('phoneNumber');
-        const paymentMethod = localStorage.getItem('paymentMethod');
-
-        // Hiển thị dữ liệu lên trang HTML
         document.getElementById('customerName').textContent = customerName || "Không có dữ liệu";
         document.getElementById('tableNumber').textContent = tableNumber || "Không có dữ liệu";
         document.getElementById('phoneNumber').textContent = phoneNumber || "Không có dữ liệu";
-        document.getElementById('paymentMethod').textContent = paymentMethod || "Không có dữ liệu";
+                // Hiển thị mã QR khi chọn phương thức "Chuyển khoản"
+        const cashOption = document.getElementById('cash');
+        const bankTransferOption = document.getElementById('bankTransfer');
+        const qrCodeSection = document.getElementById('qrCodeSection');
+
+        bankTransferOption.addEventListener('change', () => {
+            qrCodeSection.style.display = 'block';
+        });
+        cashOption.addEventListener('change', () => {
+            qrCodeSection.style.display = 'none';
+        });
+
+
+        // Xác nhận đơn hàng
         function confirmOrder() {
-            alert("Đơn hàng của bạn đã được xác nhận. Cảm ơn bạn!");
-            localStorage.clear(); // Xóa dữ liệu sau khi xác nhận
+            if (bankTransferOption.checked && !document.getElementById('transferConfirmed').checked) {
+                alert("Đơn hàng chưa được xác nhận. Vui lòng xác nhận rằng bạn đã chuyển khoản.");
+                return;
+            }
+            localStorage.setItem('orderStatus', 'pending');
+            alert("Đơn hàng đã được xác nhận!");
+            window.location.href = 'order-status.html';
         }
-        
     
     </script>
   
