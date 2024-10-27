@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Trạng Thái Đơn Hàng</title>
+</head>
+<body>
+    <h1>Quản Lý Trạng Thái Đơn Hàng</h1>
+
+    <label for="tableNumberInput">Nhập số thứ tự bàn:</label>
+    <input type="number" id="tableNumberInput" placeholder="VD: 5"><br><br>
+
+    <label for="statusSelect">Chọn trạng thái:</label>
+    <select id="statusSelect">
+        <option value="Đang chuẩn bị">Đang chuẩn bị</option>
+        <option value="Đã sẵn sàng">Đã sẵn sàng - Mời đến nhận món</option>
+        <option value="Bàn không có khách">Bàn không có khách</option>
+    </select><br><br>
+
+    <button onclick="updateStatus()">Cập nhật trạng thái</button>
+
+    <script>
+        function updateStatus() {
+            const tableNumber = document.getElementById('tableNumberInput').value;
+            const status = document.getElementById('statusSelect').value;
+            
+            if (tableNumber) {
+                localStorage.setItem(`tableStatus_${tableNumber}`, status);
+                alert(`Trạng thái bàn ${tableNumber} đã được cập nhật thành công!`);
+            } else {
+                alert("Vui lòng nhập số bàn.");
+            }
+        }
+    </script>
+</body>
+</html>
