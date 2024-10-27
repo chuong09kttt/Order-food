@@ -160,27 +160,25 @@ function viewOrder() {
             return false; // Block navigation if table number is missing
         }
         
-         // Restore customer information from localStorage on page load
+        // Khôi phục thông tin khách hàng khi trang được tải
         window.onload = function () {
+           restoreCustomerInfo();
+        };
+
+        // Khôi phục thông tin khách hàng từ localStorage
+        function restoreCustomerInfo() {
             const customerName = localStorage.getItem('customerName') || '';
             const tableNumber = localStorage.getItem('tableNumber') || '';
             const phoneNumber = localStorage.getItem('phoneNumber') || '';
-            const order = JSON.parse(localStorage.getItem('order')) || [];
-
             document.getElementById('customerName').value = customerName;
             document.getElementById('tableNumber').value = tableNumber;
             document.getElementById('phoneNumber').value = phoneNumber;
+        }
 
-            // Display the saved order
-            if (order.length > 0) {
-                alert(`Đơn hàng hiện tại cho bàn ${tableNumber}: ${order.map(item => `${item.name} - Số lượng: ${item.quantity}`).join(', ')}`);
-            }
-        };
-        
       
-
+        // Thêm món vào đơn hàng với kiểm tra số bàn
         function addItemToOrder(itemName, itemPrice) {
-            if (!checkTableNumber()) return;
+            if (!checkTableNumber()) return;// Ngăn chặn nếu không nhập số bàn
 
             const quantity = parseInt(prompt(`Nhập số lượng cho ${itemName}:`)) || 1;
             const orderItem = { name: itemName, price: itemPrice, quantity };
@@ -190,6 +188,12 @@ function viewOrder() {
             localStorage.setItem('order', JSON.stringify(order));
 
             alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
+        }
+
+
+        // Xem đơn hàng
+        function viewOrder() {
+            window.location.href = "view-order.html";
         }
 
         function attemptSaveOrder() {
@@ -218,7 +222,8 @@ function viewOrder() {
                 saveOrder();
             }
         }
-        
+
+        // Lưu đơn hàng và chuyển hướng đến trang xem đơn hàng
         function saveOrder() {
             // Get values from input fields
             const customerName = document.getElementById('customerName').value;
@@ -233,6 +238,15 @@ function viewOrder() {
             // Redirect to view-order.html
             window.location.href = 'view-order.html';
         }
+
+        // Sự kiện cho form gửi, yêu cầu kiểm tra số bàn trước
+        const form = document.getElementById('orderForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn hành động mặc định của form
+            if (checkTableNumber()) {
+                saveOrder(); // Lưu đơn hàng nếu kiểm tra số bàn thành công
+            }
+        });
 
         // Function to view order status
         function viewOrderStatus() {
