@@ -137,14 +137,16 @@ function viewOrder() {
 document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
     checkbox.addEventListener('click', function (event) {
         const tableNumber = document.getElementById('tableNumber').value;
-        
+
         if (!tableNumber) {
             event.preventDefault(); // Ngăn không cho checkbox được chọn
             alert("Vui lòng nhập số bàn trước khi chọn món.");
+        } else {
+            // Nếu có số bàn, lưu dữ liệu khách hàng
+            storeCustomerData();
         }
     });
 });
-
 
 
         // Lưu dữ liệu khách hàng vào localStorage
@@ -158,24 +160,24 @@ function storeCustomerData() {
     localStorage.setItem('tableNumber', tableNumber);
     localStorage.setItem('phoneNumber', phoneNumber);
 }
-  // Check if table number is entered before allowing menu item selection
+
+// Kiểm tra số bàn trước khi cho phép chọn món
 function checkTableNumber() {
     const tableNumber = document.getElementById('tableNumber').value;
     if (!tableNumber) {
         alert("Vui lòng nhập số bàn trước khi chọn món.");
         return false; // Prevents link navigation
     }
-     // Save customer data to localStorage
-    //storeCustomerData();
     return true;
 }
-// Usage example
+
+// Xác nhận và lưu dữ liệu khách hàng nếu số bàn hợp lệ
 function confirmAndSaveData() {
     if (checkTableNumber()) {
         storeCustomerData(); // Only store data if table number check passes
-        return true; // Allow navigation
+        return true; //  Cho phép điều hướng
     }
-    return false; // Block navigation if table number is missing
+    return false; // Ngăn điều hướng nếu thiếu số bàn
 }
 
 // Khôi phục thông tin khách hàng khi trang được tải
