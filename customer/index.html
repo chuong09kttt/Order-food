@@ -85,7 +85,7 @@
             </div><br>
             
             <button type="button" onclick="saveOrder()">Xem đơn hàng</button><br>
-           
+            <button onclick="viewOrderStatus()" style="margin-left: 10px;">Xem trạng thái order</button>
         </form>
     </section>
 
@@ -113,7 +113,14 @@
             // Chuyển hướng đến trang view-order.html
             window.location.href = 'view-order.html';
         }
+
+                    // Chức năng để xem trạng thái đơn hàng
+        function viewOrderStatus() {
+            window.location.href = 'check-status.html';
+        }
+        
     </script>
+
 
     
     <script src="scripts/order.js"></script>
