@@ -120,18 +120,22 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
 // Kiểm tra số bàn trước khi cho phép chọn món
 function isTableNumberValid() {
     const tableNumber = document.getElementById('tableNumber').value;
-     // Kiểm tra xem số bàn có phải là số dương và không bằng 0 hay không
+    console.log('Số bàn nhập:', tableNumber); // Thêm dòng này để kiểm tra giá trị
     if (!tableNumber || tableNumber <= 0) {
         alert("Vui lòng nhập số bàn trước khi thực hiện thao tác này.");
-        return false; // Prevents further actions if table number is not valid
+        return false;
     }
     return true;
 }
 
 // Xem đơn hàng
 function viewOrder() {
-    console.log('viewOrder called'); // Thêm dòng này để kiểm tra
-    if (!isTableNumberValid()) return; // Kiểm tra số bàn trước khi xem đơn hàng
+    console.log('viewOrder called'); // Xác nhận hàm đã được gọi
+    if (!isTableNumberValid()) {
+        console.log('Số bàn không hợp lệ'); // Thông báo nếu số bàn không hợp lệ
+        return; 
+    }
+    console.log('Số bàn hợp lệ, chuyển hướng đến view-order.html');
     window.location.href = "view-order.html";
 }
 
