@@ -103,3 +103,25 @@ document.getElementById('exportToExcel').addEventListener('click', exportToExcel
 
 // Cập nhật dữ liệu mỗi 5 giây
 setInterval(loadOrders, 5000);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const orderSummary = document.getElementById('orderSummary');
+    const order = JSON.parse(localStorage.getItem('order')) || [];
+
+    if (order.length === 0) {
+        orderSummary.innerHTML = '<p>Chưa có món ăn nào được thêm vào đơn hàng.</p>';
+        return;
+    }
+
+    order.forEach(item => {
+        orderSummary.innerHTML += `<p>${item.name} - Số lượng: ${item.quantity}</p>`;
+    });
+});
+
+function submitOrder() {
+    // Logic to send the order details to the server or Google Form
+    alert('Đơn hàng đã được gửi thành công!');
+}
+
+
