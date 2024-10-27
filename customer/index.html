@@ -126,6 +126,27 @@
         </form>
     </section>
 
+
+    <script>
+        // Check if table number is entered before allowing menu item selection
+        function checkTableNumber() {
+            const tableNumber = document.getElementById('tableNumber').value;
+            if (!tableNumber) {
+                alert("Vui lòng nhập số bàn trước khi chọn món.");
+                return false; // Prevents link navigation
+            }
+            return true;
+        }
+
+        function attemptSaveOrder() {
+            const tableNumber = document.getElementById('tableNumber').value;
+            if (!tableNumber) {
+                alert("Vui lòng nhập số bàn trước khi đặt món.");
+            } else {
+                saveOrder();
+            }
+        }
+        
     <script>
         const form = document.getElementById('orderForm');
 
