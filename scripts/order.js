@@ -1,4 +1,4 @@
-// Lắng nghe sự kiện gửi của form
+// Lắng nghe sự kiện gửi của form 
 const form = document.getElementById('orderForm');
 form.addEventListener('submit', function (event) {
     event.preventDefault();  // Ngăn chặn hành vi gửi mặc định của form
@@ -7,6 +7,12 @@ form.addEventListener('submit', function (event) {
     const customerName = document.getElementById('customerName').value;
     const tableNumber = document.getElementById('tableNumber').value; // Lấy số bàn
     const phoneNumber = document.getElementById('phoneNumber').value; // Lấy số điện thoại
+
+    // Kiểm tra xem người dùng đã nhập số bàn chưa
+    if (!tableNumber) {
+        alert('Vui lòng nhập số bàn trước khi chọn món ăn.');
+        return;  // Không tiếp tục nếu chưa nhập số bàn
+    }
 
     // Lưu thông tin khách hàng vào localStorage
     localStorage.setItem('customerName', customerName);
@@ -18,7 +24,7 @@ form.addEventListener('submit', function (event) {
     let data = new URLSearchParams();
     data.append('entry.77411834', phoneNumber);  // SDT
     data.append('entry.1357572145', tableNumber); // Số thứ tự bàn
-    data.append('entry.1433881729', customerName); // tên khách hàng
+    data.append('entry.1433881729', customerName); // Tên khách hàng
 
     document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
         const foodName = checkbox.value;
@@ -56,6 +62,7 @@ form.addEventListener('submit', function (event) {
     }).then(() => {
         alert('Đơn hàng của bạn đã được gửi thành công!');
         form.reset();  // Đặt lại form sau khi gửi
+        restoreCustomerInfo(); // Gọi lại hàm để khôi phục thông tin khách hàng
     }).catch(error => {
         alert('Đã xảy ra lỗi khi gửi đơn hàng: ' + error);
     });
@@ -91,6 +98,14 @@ function decreaseQuantity() {
 }
 
 function addToOrder(itemName, itemPrice) {
+    const tableNumber = localStorage.getItem('tableNumber');
+
+    // Kiểm tra nếu chưa nhập số bàn
+    if (!tableNumber) {
+        alert('Vui lòng nhập số bàn trước khi thêm món ăn vào đơn hàng.');
+        return;
+    }
+
     const quantity = parseInt(document.getElementById('quantity').value) || 1;
     if (quantity > 0) {
         const orderItem = {
