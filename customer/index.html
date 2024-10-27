@@ -123,6 +123,24 @@
         }
     </script>
 
+    <script>
+        function saveOrder() {
+            // Lấy giá trị từ các ô input
+            const customerName = document.getElementById('customerName').value;
+            const tableNumber = document.getElementById('tableNumber').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            // Lưu dữ liệu vào localStorage
+            localStorage.setItem('customerName', customerName);
+            localStorage.setItem('tableNumber', tableNumber);
+            localStorage.setItem('phoneNumber', phoneNumber);
+
+            // Chuyển hướng đến trang view-order.html
+            window.location.href = 'view-order.html';
+        }
+    </script>
+
+    
     <script src="scripts/order.js"></script>
 </body>
 </html>
