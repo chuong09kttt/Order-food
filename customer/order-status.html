@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trạng Thái Đơn Hàng</title>
+</head>
+<body>
+    <h1>Trạng Thái Đơn Hàng</h1>
+    
+    <p id="statusMessage"></p>
+    
+    <button onclick="markAsReady()">Đánh dấu đã chế biến xong</button>
+
+    <script>
+        // Hiển thị trạng thái đơn hàng
+        const orderStatus = localStorage.getItem('orderStatus');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        if (orderStatus === 'ready') {
+            statusMessage.textContent = "Đơn hàng đã chế biến xong! Quý khách vui lòng đến quầy chế biến để nhận món.";
+        } else {
+            statusMessage.textContent = "Đơn hàng của bạn đang được chế biến.";
+        }
+
+        // Đánh dấu đơn hàng là "đã sẵn sàng"
+        function markAsReady() {
+            localStorage.setItem('orderStatus', 'ready');
+            statusMessage.textContent = "Đơn hàng đã chế biến xong! Quý khách vui lòng đến quầy chế biến để nhận món.";
+            alert("Đã cập nhật trạng thái đơn hàng thành công!");
+        }
+    </script>
+</body>
+</html>
