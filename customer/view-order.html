@@ -34,13 +34,8 @@
 
         // Gửi đơn hàng
         function submitOrder() {
-            // Lấy dữ liệu từ form và đơn hàng
-            const customerName = localStorage.getItem('customerName') || '';
-            const tableNumber = localStorage.getItem('tableNumber') || '';
-            const phoneNumber = localStorage.getItem('phoneNumber') || '';
             const order = JSON.parse(localStorage.getItem('order')) || [];
 
-            // Hiển thị thông báo xác nhận
             if (order.length === 0) {
                 alert("Đơn hàng trống. Vui lòng chọn món ăn.");
                 return;
