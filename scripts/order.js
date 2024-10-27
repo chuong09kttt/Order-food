@@ -130,6 +130,7 @@ function isTableNumberValid() {
 
 // Xem đơn hàng
 function viewOrder() {
+    console.log('viewOrder called'); // Thêm dòng này để kiểm tra
     if (!isTableNumberValid()) return; // Kiểm tra số bàn trước khi xem đơn hàng
     window.location.href = "view-order.html";
 }
