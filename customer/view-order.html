@@ -54,6 +54,13 @@
             max-width: 100%; /* Giới hạn chiều rộng hình ảnh */
             height: auto; /* Tự động điều chỉnh chiều cao */
         }
+        /* Thêm kiểu cho các nút hủy */
+        .cancel-button {
+            background-color: #ff3333; /* Màu nền cho nút hủy */
+        }
+        .cancel-button:hover {
+            background-color: #ff0000; /* Thay đổi màu khi di chuột vào nút hủy */
+        }
     </style>
 </head>
 <body>
@@ -85,6 +92,7 @@
         </div>
         
         <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
+        <button class="cancel-button" onclick="cancelOrder()">Hủy Đơn Hàng</button> <!-- Nút Hủy Đơn Hàng -->
     </div>
 
     <script>
@@ -145,7 +153,25 @@
             alert("Đơn hàng đã được xác nhận!");
             window.location.href = 'order-status.html';
         }
+
+        // Hủy đơn hàng
+        function cancelOrder() {
+            // Xóa dữ liệu từ localStorage
+            localStorage.removeItem('customerName');
+            localStorage.removeItem('tableNumber');
+            localStorage.removeItem('phoneNumber');
+            localStorage.removeItem('cart'); // Xóa giỏ hàng
+            localStorage.removeItem('orderStatus'); // Xóa trạng thái đơn hàng
+
+            // Làm trống các trường hiển thị
+            document.getElementById('customerName').textContent = "Không có dữ liệu";
+            document.getElementById('tableNumber').textContent = "Không có dữ liệu";
+            document.getElementById('phoneNumber').textContent = "Không có dữ liệu";
+            document.getElementById('orderDetails').innerHTML = "<p>Giỏ hàng trống.</p>";
+            document.getElementById('totalValue').textContent = "0 VND";
+
+            alert("Đơn hàng đã được hủy!");
+        }
     </script>
-  
 </body>
 </html>
