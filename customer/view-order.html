@@ -67,16 +67,16 @@
     <h1>Đơn Hàng</h1>
     
     <div class="container">
-        <h3>Khách hàng</h3>
-        <p><strong>Tên:</strong> <span id="customerName"></span></p>
+        <h3>KHÁCH HÀNG</h3>
         <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
+        <p><strong>Tên:</strong> <span id="customerName"></span></p>
         <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
     
-        <h3>Menu</h3>
+        <h3>MENU</h3>
         <div id="orderDetails"></div>
         <p><strong>Tổng giá trị đơn hàng:</strong> <span id="totalValue">0 VND</span></p>
 
-        <h3>Thanh toán</h3>
+        <h3>THANH TOÁN</h3>
         <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
         <label for="cash">Tiền mặt</label><br>
         <input type="radio" id="bankTransfer" name="paymentMethod" value="Chuyển khoản" required>
@@ -84,7 +84,7 @@
         
         <div id="qrCodeSection" style="display: none; margin-top: 15px;">
             <p>Quý khách vui lòng quét mã QR để chuyển khoản:</p>
-            <img src="images/qr-code.png" alt="Mã QR Ngân Hàng" style="width: 150px; height: 150px;">
+            <img src="images/qr.jpg" alt="Mã QR Ngân Hàng" style="width: 150px; height: 150px;">
             <div style="margin-top: 10px;">
                 <input type="checkbox" id="transferConfirmed">
                 <label for="transferConfirmed">Tôi đã hoàn tất chuyển khoản</label>
@@ -93,6 +93,7 @@
         
         <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
         <button class="cancel-button" onclick="cancelOrder()">Hủy Đơn Hàng</button> <!-- Nút Hủy Đơn Hàng -->
+    
     </div>
 
     <script>
