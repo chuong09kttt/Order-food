@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Café</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/background.jpg'); /* Replace with your background image path */
+            background-size: cover; /* Ensures the background covers the whole page */
+            color: #fff; /* Text color for better visibility against the background */
+            font-family: Arial, sans-serif; /* Font style */
+        }
+        header {
+            text-align: center; /* Center align header */
+            margin: 20px 0; /* Space above and below the header */
+        }
+        section {
+            max-width: 800px; /* Limit the width of the section */
+            margin: 0 auto; /* Center the section */
+            background: rgba(0, 0, 0, 0.7); /* Add a semi-transparent background for readability */
+            padding: 20px; /* Add padding inside the section */
+            border-radius: 10px; /* Rounded corners */
+        }
+        h1 {
+            margin: 0; /* Remove default margin */
+        }
+        .button-container {
+            display: flex; /* Use flexbox to arrange buttons in a row */
+            justify-content: center; /* Center the buttons */
+            margin-bottom: 20px; /* Space below the button container */
+        }
+        button {
+            padding: 10px 20px; /* Add padding to buttons */
+            margin: 0 10px; /* Space between buttons */
+            font-size: 16px; /* Button text size */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,6 +47,12 @@
 
     <section>
         <h2>Thông tin đặt hàng</h2>
+        
+        <div class="button-container">
+            <button type="button" onclick="saveOrder()">Xem đơn hàng</button>
+            <button type="button" onclick="viewOrderStatus()">Xem trạng thái order</button>
+        </div>
+
         <form id="orderForm">
             <label for="tableNumber">Số thứ tự bàn:</label><br>
             <input type="number" id="tableNumber" name="tableNumber" required><br><br>
@@ -83,9 +122,6 @@
                     <a href="tiger-detail.html" class="view-more">Xem thêm</a>
                 </div>
             </div><br>
-
-            <button type="button" onclick="saveOrder()">Xem đơn hàng</button>
-            <button type="button" onclick="viewOrderStatus()" style="margin-left: 10px;">Xem trạng thái order</button>
         </form>
     </section>
 
