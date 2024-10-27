@@ -150,15 +150,38 @@ function viewOrderStatus() {
     }
     window.location.href = 'check-status.html';
 }
-// Kiểm tra số bàn trước khi cho phép điều hướng
-function confirmAndSaveData() {
+
+
+
+function isTableNumberValid() {
     const tableNumber = document.getElementById('tableNumber').value;
     if (!tableNumber) {
-        alert("Vui lòng nhập số bàn trước khi chọn món.");
-        return false; // Ngăn điều hướng nếu thiếu số bàn
+        alert("Vui lòng nhập số bàn trước khi thực hiện thao tác này.");
+        return false; // Prevents further actions if table number is not valid
     }
+    return true;
+}
 
-    // Lưu dữ liệu khách hàng vào localStorage
-    storeCustomerData(); 
-    return true; // Cho phép điều hướng
+// Update the existing code:
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (!isTableNumberValid()) return; // Check table number validity
+
+    // Continue with order submission logic
+});
+
+// In the checkbox listener:
+checkbox.addEventListener('click', function (event) {
+    if (!isTableNumberValid()) {
+        event.preventDefault(); // Prevent checking if no table number
+    } else {
+        storeCustomerData(); // If valid, store data
+    }
+});
+
+// Update confirmAndSaveData function:
+function confirmAndSaveData() {
+    if (!isTableNumberValid()) return false; // Check and prevent navigation
+    storeCustomerData();
+    return true; // Allow navigation
 }
