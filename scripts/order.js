@@ -91,3 +91,6 @@ function addToOrder(itemName, itemPrice) {
         alert('Vui lòng chọn số lượng hợp lệ.');
     }
 }
+function viewOrder() {
+    window.location.href = "view-order.html";
+}
