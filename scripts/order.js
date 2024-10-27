@@ -150,3 +150,15 @@ function viewOrderStatus() {
     }
     window.location.href = 'check-status.html';
 }
+// Kiểm tra số bàn trước khi cho phép điều hướng
+function confirmAndSaveData() {
+    const tableNumber = document.getElementById('tableNumber').value;
+    if (!tableNumber) {
+        alert("Vui lòng nhập số bàn trước khi chọn món.");
+        return false; // Ngăn điều hướng nếu thiếu số bàn
+    }
+
+    // Lưu dữ liệu khách hàng vào localStorage
+    storeCustomerData(); 
+    return true; // Cho phép điều hướng
+}
