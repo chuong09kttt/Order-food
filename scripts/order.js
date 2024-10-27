@@ -72,7 +72,7 @@ function decreaseQuantity() {
 }
 
 function addToOrder(itemName, itemPrice) {
-    const quantity = parseInt(document.getElementById('quantity').value);
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
     if (quantity > 0) {
         const orderItem = {
             name: itemName,
@@ -80,11 +80,13 @@ function addToOrder(itemName, itemPrice) {
             quantity: quantity
         };
 
+        // Lưu thông tin vào localStorage
         let order = JSON.parse(localStorage.getItem('order')) || [];
         order.push(orderItem);
         localStorage.setItem('order', JSON.stringify(order));
 
-        alert(`Đã thêm ${itemName} - Số lượng: ${quantity} vào đơn hàng!`);
+        // Hiển thị thông báo tên món ăn và số lượng
+        alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
     } else {
         alert('Vui lòng chọn số lượng hợp lệ.');
     }
