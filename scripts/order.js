@@ -2,22 +2,18 @@
 const form = document.getElementById('orderForm');
 form.addEventListener('submit', function (event) {
     event.preventDefault();  // Ngăn chặn hành vi gửi mặc định của form
-
-    // Thu thập tên khách hàng
-    const customerName = document.getElementById('customerName').value;
-    const tableNumber = document.getElementById('tableNumber').value; // Lấy số bàn
-    const phoneNumber = document.getElementById('phoneNumber').value; // Lấy số điện thoại
-
-    // Kiểm tra xem người dùng đã nhập số bàn chưa
+    // Thu thập số bàn
+    const tableNumber = document.getElementById('tableNumber').value;
+        // Kiểm tra nếu số bàn chưa được nhập
     if (!tableNumber) {
-        alert('Vui lòng nhập số bàn trước khi chọn món ăn.');
-        return;  // Không tiếp tục nếu chưa nhập số bàn
+        event.preventDefault();  // Ngăn chặn hành vi gửi mặc định của form
+        alert('Vui lòng nhập số bàn trước khi đặt món.'); // Hiển thị cảnh báo
+        return;
     }
 
-    // Lưu thông tin khách hàng vào localStorage
-    localStorage.setItem('customerName', customerName);
-    localStorage.setItem('tableNumber', tableNumber);
-    localStorage.setItem('phoneNumber', phoneNumber);
+    // Nếu có số bàn, tiếp tục thực hiện các thao tác còn lại
+    const customerName = document.getElementById('customerName').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
 
     // Thu thập các món ăn đã chọn
     let selectedFoods = [];
