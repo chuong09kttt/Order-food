@@ -10,11 +10,27 @@ form.addEventListener('submit', function (event) {
 
     // Thu thập các món ăn đã chọn
     let selectedFoods = [];
+    let data = new URLSearchParams();
+    data.append('entry.77411834', phoneNumber);  // SDT
+    data.append('entry.1357572145', tableNumber); // Số thứ tự bàn
+    data.append('entry.1433881729', customerName); // tên khách hàng
+
     document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
         const foodName = checkbox.value;
-        const quantity = parseInt(document.querySelector(`input[name="quantity_${foodName}"]`).value) || 0; // Lấy số lượng
+        const quantity = parseInt(document.querySelector(`input[name="quantity_${foodName}"]`).value) || 0;
+        
         if (quantity > 0) {
             selectedFoods.push(`${foodName} - Số lượng: ${quantity}`);
+
+            // Thêm số lượng từng món vào data
+            if (foodName === 'pho') data.append('entry.974872402', quantity); 
+            if (foodName === 'buncha') data.append('entry.687928994', quantity); 
+            if (foodName === 'comtam') data.append('entry.1698670265', quantity); 
+            if (foodName === 'goicuon') data.append('entry.1740240441', quantity); 
+            if (foodName === 'sinhtobo') data.append('entry.701833790', quantity); 
+            if (foodName === 'camep') data.append('entry.2145223647', quantity); 
+            if (foodName === 'tiger') data.append('entry.261073239', quantity); 
+            if (foodName === 'cafesua') data.append('entry.885982600', quantity); 
         }
     });
 
@@ -24,30 +40,11 @@ form.addEventListener('submit', function (event) {
         return;  // Không tiếp tục nếu không có món ăn nào được chọn
     }
 
-    // URL Google Form của bạn
-    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse';
-
-    // Tạo đối tượng data để gửi
-    const data = new URLSearchParams();
-    data.append('entry.77411834', phoneNumber);  // SDT
-    data.append('entry.1357572145', tableNumber); // Số thứ tự bàn (thay đổi entry ID cho đúng)
-    data.append('entry.1433881729', customerName); // tên khách hàng
-    data.append('entry.974872402', pho); // Phở
-    data.append('entry.687928994', buncha); // Bún chả
-    data.append('entry.1698670265', comtam); // cơm tấm
-    data.append('entry.1740240441', goicuon); // gỏi cuốn
-    data.append('entry.701833790', sinhtobo); // sinh tố bơ
-    data.append('entry.2145223647', camep); // cam ép
-    data.append('entry.261073239', tiger); // bia tiger
-    data.append('entry.885982600', cafesua); // cafe sữa
-
-    
-
     // Hiển thị tên khách hàng và các món ăn đã chọn
     alert(`Tên khách hàng: ${customerName}\nMón ăn đã chọn: ${selectedFoods.join(', ')}`);
 
     // Gửi dữ liệu lên Google Forms
-    fetch(formUrl, {
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse', {
         method: 'POST',
         body: data,
         mode: 'no-cors'
@@ -59,18 +56,18 @@ form.addEventListener('submit', function (event) {
     });
 });
 
-// Thêm detail
+// Thêm detail cho trang chi tiết
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantity');
-    let quantity = parseInt(quantityInput.value) || 0; // Giá trị mặc định là 1 nếu trống
-    quantityInput.value = quantity + 1;  // Tăng số lượng lên 1
+    let quantity = parseInt(quantityInput.value) || 0;
+    quantityInput.value = quantity + 1;
 }
 
 function decreaseQuantity() {
     const quantityInput = document.getElementById('quantity');
-    let quantity = parseInt(quantityInput.value) || 0; // Giá trị mặc định là 1 nếu trống
-    if (quantity > 0) {  // Đảm bảo số lượng không xuống dưới 1
-        quantityInput.value = quantity - 1;  // Giảm số lượng đi 1
+    let quantity = parseInt(quantityInput.value) || 0;
+    if (quantity > 0) {
+        quantityInput.value = quantity - 1;
     }
 }
 
@@ -83,7 +80,6 @@ function addToOrder(itemName, itemPrice) {
             quantity: quantity
         };
 
-        // Lưu thông tin vào localStorage
         let order = JSON.parse(localStorage.getItem('order')) || [];
         order.push(orderItem);
         localStorage.setItem('order', JSON.stringify(order));
@@ -93,5 +89,3 @@ function addToOrder(itemName, itemPrice) {
         alert('Vui lòng chọn số lượng hợp lệ.');
     }
 }
-
-
