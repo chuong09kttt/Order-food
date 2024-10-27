@@ -1,57 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin Đơn hàng</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Thông Tin Đơn Hàng</title>
 </head>
 <body>
-    <h1>Đơn hàng của bạn</h1>
-    <div id="orderDetails">
-        <!-- Chi tiết đơn hàng sẽ hiển thị ở đây -->
+    <h1>Thông Tin Đơn Hàng của Khách Hàng</h1>
+    
+    <div>
+        <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
+        <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
+        <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
     </div>
-    <button onclick="submitOrder()">Gửi đơn hàng</button>
 
     <script>
-        // Lấy thông tin đơn hàng từ localStorage và hiển thị
-        function displayOrder() {
-            const orderDetails = document.getElementById('orderDetails');
-            let order = JSON.parse(localStorage.getItem('order')) || [];
+        // Lấy dữ liệu từ localStorage
+        const customerName = localStorage.getItem('customerName');
+        const tableNumber = localStorage.getItem('tableNumber');
+        const phoneNumber = localStorage.getItem('phoneNumber');
 
-            if (order.length === 0) {
-                orderDetails.innerHTML = "<p>Chưa có món nào trong đơn hàng.</p>";
-                return;
-            }
-
-            let orderInfo = "<ul>";
-            order.forEach(item => {
-                orderInfo += `<li>${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price * item.quantity} VND</li>`;
-            });
-            orderInfo += "</ul>";
-            orderDetails.innerHTML = orderInfo;
-        }
-
-        // Gửi đơn hàng
-        function submitOrder() {
-            const order = JSON.parse(localStorage.getItem('order')) || [];
-
-            if (order.length === 0) {
-                alert("Đơn hàng trống. Vui lòng chọn món ăn.");
-                return;
-            }
-
-            alert("Đơn hàng của bạn đã được gửi thành công!");
-            // Reset dữ liệu trong localStorage
-            localStorage.removeItem('order');
-            localStorage.removeItem('customerName');
-            localStorage.removeItem('tableNumber');
-            localStorage.removeItem('phoneNumber');
-            window.location.href = "index.html"; // Quay về trang chính
-        }
-
-        // Hiển thị đơn hàng khi tải trang
-        window.onload = displayOrder;
+        // Hiển thị dữ liệu lên trang HTML
+        document.getElementById('customerName').textContent = customerName || "Không có dữ liệu";
+        document.getElementById('tableNumber').textContent = tableNumber || "Không có dữ liệu";
+        document.getElementById('phoneNumber').textContent = phoneNumber || "Không có dữ liệu";
     </script>
 </body>
 </html>
