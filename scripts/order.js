@@ -1,13 +1,27 @@
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.addEventListener('click', function (event) {
+            if (!isTableNumberValid()) {
+                event.preventDefault(); // Ngăn không cho checkbox được chọn
+                alert("Vui lòng nhập số bàn trước khi chọn món.");
+            }
+        });
+    });
+});
+
 // Lắng nghe sự kiện gửi của form 
 const form = document.getElementById('orderForm');
+
 form.addEventListener('submit', function (event) {
     event.preventDefault();  // Ngăn chặn hành vi gửi mặc định của form
 
     // Thu thập số bàn
-    const tableNumber = document.getElementById('tableNumber').value;
+    //const tableNumber = document.getElementById('tableNumber').value;
 
     // Kiểm tra nếu số bàn chưa được nhập
-    if (!tableNumber) {
+    if (!isTableNumberValid()) {
         alert('Vui lòng nhập số bàn trước khi đặt món.'); // Hiển thị cảnh báo
         return;
     }
@@ -22,6 +36,7 @@ form.addEventListener('submit', function (event) {
     // Thu thập các món ăn đã chọn
     let selectedFoods = [];
     let data = new URLSearchParams();
+    
     data.append('entry.77411834', phoneNumber);  // SDT
     data.append('entry.1357572145', tableNumber); // Số thứ tự bàn
     data.append('entry.1433881729', customerName); // Tên khách hàng
@@ -105,7 +120,8 @@ document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
 // Kiểm tra số bàn trước khi cho phép chọn món
 function isTableNumberValid() {
     const tableNumber = document.getElementById('tableNumber').value;
-    if (!tableNumber) {
+     // Kiểm tra xem số bàn có phải là số dương và không bằng 0 hay không
+    if (!tableNumber || tableNumber <= 0) {
         alert("Vui lòng nhập số bàn trước khi thực hiện thao tác này.");
         return false; // Prevents further actions if table number is not valid
     }
