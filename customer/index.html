@@ -95,6 +95,34 @@
         </form>
     </section>
 
+    <script>
+        const form = document.getElementById('orderForm');
+        
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get values from form inputs
+            const tableNumber = document.getElementById('tableNumber').value;
+            const customerName = document.getElementById('customerName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            // Save customer info to localStorage
+            localStorage.setItem('customerName', customerName);
+            localStorage.setItem('tableNumber', tableNumber);
+            localStorage.setItem('phoneNumber', phoneNumber);
+
+            // Here, you can add code to save the order if needed
+
+            // Optionally, you can redirect to another page after saving the order
+            // window.location.href = 'next-page.html';
+        });
+
+        function viewOrder() {
+            // Redirect to view-order.html
+            window.location.href = 'view-order.html';
+        }
+    </script>
+
     <script src="scripts/order.js"></script>
 </body>
 </html>
