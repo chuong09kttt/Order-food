@@ -3,28 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Đơn Hàng</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Danh sách Đơn hàng - Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { text-align: center; }
+        .order-list { width: 100%; margin: 0 auto; border-collapse: collapse; }
+        .order-list th, .order-list td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        .order-list th { background-color: #f2f2f2; }
+        .order-item { margin-bottom: 15px; }
+        .status-paid { color: green; }
+        .status-unpaid { color: red; }
+        .status-completed { color: blue; }
+    </style>
 </head>
 <body>
-    <h1>Danh Sách Đơn Hàng</h1>
-    
-    <!-- Nút để xóa dữ liệu trong ngày và xuất ra file Excel -->
-    <button id="clearDailyData">Xóa Dữ Liệu Trong Ngày</button>
-    <button id="exportToExcel">Xuất Dữ Liệu Ra Excel</button>
-    
-    <table id="ordersTable">
+
+    <h1>Danh sách Đơn hàng của Khách hàng</h1>
+    <table class="order-list">
         <thead>
             <tr>
-                <th>Thời gian</th>
-                <th>Món Ăn</th>
+                <th>Số Bàn</th>
+                <th>Tên Khách Hàng</th>
+                <th>Số Điện Thoại</th>
+                <th>Danh Sách Món Ăn</th>
+                <th>Tổng Giá</th>
+                <th>Trạng Thái</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Đơn hàng sẽ được tải ở đây -->
+        <tbody id="orderTableBody">
+            <!-- Các đơn hàng sẽ được hiển thị tại đây -->
         </tbody>
     </table>
 
-    <script src="../scripts/view-orders.js"></script>
+    <script>
+        // Hàm lấy dữ liệu đơn hàng từ localStorage
+        function getOrdersFromLocalStorage() {
+            return JSON.parse(localStorage.getItem('orders')) || [];
+        }
+
+        // Hàm định dạng đơn hàng thành HTML row
+        function displayOrders() {
+            const orderTableBody = document.getElementById('orderTableBody');
+            orderTableBody.innerHTML = '';  // Xóa dữ liệu cũ
+
+            const orders = getOrdersFromLocalStorage();
+
+            orders.forEach((order, index) => {
+                const row = document.createElement('tr');
+
+                // Tạo ô dữ liệu cho từng thuộc tính của đơn hàng
+                row.innerHTML = `
+                    <td>${order.tableNumber || 'N/A'}</td>
+                    <td>${order.customerName || 'N/A'}</td>
+                    <td>${order.phoneNumber || 'N/A'}</td>
+                    <td>
+                        ${order.items.map(item => `${item.name} - SL: ${item.quantity}`).join(', ')}
+                    </td>
+                    <td>${order.totalPrice || 0} VND</td>
+                    <td class="${getStatusClass(order.status)}">${order.status}</td>
+                `;
+                
+                // Thêm hàng vào bảng
+                orderTableBody.appendChild(row);
+            });
+        }
+
+        // Hàm hỗ trợ để xác định lớp CSS trạng thái
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Đã thanh toán': return 'status-paid';
+                case 'Chưa thanh toán': return 'status-unpaid';
+                case 'Đã kết thúc': return 'status-completed';
+                default: return '';
+            }
+        }
+
+        // Khởi tạo và hiển thị danh sách đơn hàng
+        document.addEventListener('DOMContentLoaded', displayOrders);
+    </script>
+
 </body>
 </html>
