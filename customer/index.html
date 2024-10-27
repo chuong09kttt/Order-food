@@ -128,6 +128,24 @@
 
 
     <script>
+
+         // Restore customer information from localStorage on page load
+        window.onload = function () {
+            const customerName = localStorage.getItem('customerName') || '';
+            const tableNumber = localStorage.getItem('tableNumber') || '';
+            const phoneNumber = localStorage.getItem('phoneNumber') || '';
+            const order = JSON.parse(localStorage.getItem('order')) || [];
+
+            document.getElementById('customerName').value = customerName;
+            document.getElementById('tableNumber').value = tableNumber;
+            document.getElementById('phoneNumber').value = phoneNumber;
+
+            // Display the saved order
+            if (order.length > 0) {
+                alert(`Đơn hàng hiện tại cho bàn ${tableNumber}: ${order.map(item => `${item.name} - Số lượng: ${item.quantity}`).join(', ')}`);
+            }
+        };
+        
         // Check if table number is entered before allowing menu item selection
         function checkTableNumber() {
             const tableNumber = document.getElementById('tableNumber').value;
@@ -136,6 +154,19 @@
                 return false; // Prevents link navigation
             }
             return true;
+        }
+
+        function addItemToOrder(itemName, itemPrice) {
+            if (!checkTableNumber()) return;
+
+            const quantity = parseInt(prompt(`Nhập số lượng cho ${itemName}:`)) || 1;
+            const orderItem = { name: itemName, price: itemPrice, quantity };
+
+            let order = JSON.parse(localStorage.getItem('order')) || [];
+            order.push(orderItem);
+            localStorage.setItem('order', JSON.stringify(order));
+
+            alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
         }
 
         function attemptSaveOrder() {
