@@ -12,18 +12,29 @@
         <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
         <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
         <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
+        <p><strong>Phương thức thanh toán:</strong> <span id="paymentMethod"></span></p>
+        
     </div>
-
+    <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
     <script>
         // Lấy dữ liệu từ localStorage
         const customerName = localStorage.getItem('customerName');
         const tableNumber = localStorage.getItem('tableNumber');
         const phoneNumber = localStorage.getItem('phoneNumber');
+        const paymentMethod = localStorage.getItem('paymentMethod');
 
         // Hiển thị dữ liệu lên trang HTML
         document.getElementById('customerName').textContent = customerName || "Không có dữ liệu";
         document.getElementById('tableNumber').textContent = tableNumber || "Không có dữ liệu";
         document.getElementById('phoneNumber').textContent = phoneNumber || "Không có dữ liệu";
+        document.getElementById('paymentMethod').textContent = paymentMethod || "Không có dữ liệu";
+        function confirmOrder() {
+            alert("Đơn hàng của bạn đã được xác nhận. Cảm ơn bạn!");
+            localStorage.clear(); // Xóa dữ liệu sau khi xác nhận
+        }
+        
+    
     </script>
+  
 </body>
 </html>
