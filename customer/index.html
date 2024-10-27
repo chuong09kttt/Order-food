@@ -132,6 +132,7 @@
 
                 // Lưu dữ liệu khách hàng vào localStorage
         function storeCustomerData() {
+            
             const customerName = document.getElementById('customerName').value;
             const tableNumber = document.getElementById('tableNumber').value;
             const phoneNumber = document.getElementById('phoneNumber').value;
@@ -140,7 +141,23 @@
             localStorage.setItem('tableNumber', tableNumber);
             localStorage.setItem('phoneNumber', phoneNumber);
         }
-
+          // Check if table number is entered before allowing menu item selection
+        function checkTableNumber() {
+            const tableNumber = document.getElementById('tableNumber').value;
+            if (!tableNumber) {
+                alert("Vui lòng nhập số bàn trước khi chọn món.");
+                return false; // Prevents link navigation
+            }
+             // Save customer data to localStorage
+            
+            return true;
+        }
+        // Usage example
+        function someFunctionThatNeedsCustomerData() {
+            if (checkTableNumber()) {
+                storeCustomerData(); // Only store data if table number check passes
+            }
+        }
         
          // Restore customer information from localStorage on page load
         window.onload = function () {
@@ -159,17 +176,7 @@
             }
         };
         
-        // Check if table number is entered before allowing menu item selection
-        function checkTableNumber() {
-            const tableNumber = document.getElementById('tableNumber').value;
-            if (!tableNumber) {
-                alert("Vui lòng nhập số bàn trước khi chọn món.");
-                return false; // Prevents link navigation
-            }
-             // Save customer data to localStorage
-            storeCustomerData();
-            return true;
-        }
+      
 
         function addItemToOrder(itemName, itemPrice) {
             if (!checkTableNumber()) return;
