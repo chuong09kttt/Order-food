@@ -20,7 +20,7 @@
             font-size: 2.5em; /* Kích thước chữ lớn */
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Đổ bóng cho chữ */
         }
-        div {
+        .container {
             background-color: rgba(0, 0, 0, 0.7); /* Nền bán trong suốt */
             border-radius: 10px; /* Bo góc */
             padding: 20px; /* Padding cho các phần tử */
@@ -57,34 +57,34 @@
     </style>
 </head>
 <body>
-    <h1>Thông Tin Đơn Hàng</h1>
+    <h1>Đơn Hàng</h1>
     
-    <div>
+    <div class="container">
         <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
         <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
         <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
-    </div>
+    
+        <h3>Menu:</h3>
+        <div id="orderDetails"></div>
+        <p><strong>Tổng giá trị đơn hàng:</strong> <span id="totalValue">0 VND</span></p>
 
-    <h3>Thông Tin Món Ăn:</h3>
-    <div id="orderDetails"></div>
-    <p><strong>Tổng giá trị đơn hàng:</strong> <span id="totalValue">0 VND</span></p>
-    
-    <h3>Phương thức thanh toán:</h3>
-    <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
-    <label for="cash">Tiền mặt</label><br>
-    <input type="radio" id="bankTransfer" name="paymentMethod" value="Chuyển khoản" required>
-    <label for="bankTransfer">Chuyển khoản (với mã QR)</label>
-    
-    <div id="qrCodeSection" style="display: none; margin-top: 15px;">
-        <p>Quý khách vui lòng quét mã QR để chuyển khoản:</p>
-        <img src="images/qr-code.png" alt="Mã QR Ngân Hàng" style="width: 150px; height: 150px;">
-        <div style="margin-top: 10px;">
-            <input type="checkbox" id="transferConfirmed">
-            <label for="transferConfirmed">Tôi đã hoàn tất chuyển khoản</label>
+        <h3>Thanh toán:</h3>
+        <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
+        <label for="cash">Tiền mặt</label><br>
+        <input type="radio" id="bankTransfer" name="paymentMethod" value="Chuyển khoản" required>
+        <label for="bankTransfer">Chuyển khoản (với mã QR)</label>
+        
+        <div id="qrCodeSection" style="display: none; margin-top: 15px;">
+            <p>Quý khách vui lòng quét mã QR để chuyển khoản:</p>
+            <img src="images/qr-code.png" alt="Mã QR Ngân Hàng" style="width: 150px; height: 150px;">
+            <div style="margin-top: 10px;">
+                <input type="checkbox" id="transferConfirmed">
+                <label for="transferConfirmed">Tôi đã hoàn tất chuyển khoản</label>
+            </div>
         </div>
+        
+        <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
     </div>
-    
-    <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
 
     <script>
         // Lấy dữ liệu từ localStorage
