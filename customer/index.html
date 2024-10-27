@@ -67,56 +67,56 @@
             <h2 style="text-align: center;">MENU</h2>
             <div class="menu-grid">
                 <div class="menu-item">
-                    <a href="pho-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="pho-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/pho.jpg" alt="Phở" class="menu-image">
                     </a>
                     <p>Phở</p>
                     <p>Giá: 50,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="buncha-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="buncha-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/buncha.jpg" alt="Bún chả" class="menu-image">
                     </a>
                     <p>Bún chả</p>
                     <p>Giá: 45,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="comtam-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="comtam-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/comtam.jpg" alt="Cơm tấm" class="menu-image">
                     </a>
                     <p>Cơm tấm</p>
                     <p>Giá: 40,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="goicuon-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="goicuon-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/goicuon.jpg" alt="Gỏi cuốn" class="menu-image">
                     </a>
                     <p>Gỏi cuốn</p>
                     <p>Giá: 30,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="sinhtobo-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="sinhtobo-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/sinhtobo.jpg" alt="Sinh tố bơ" class="menu-image">
                     </a>
                     <p>Sinh tố bơ</p>
                     <p>Giá: 60,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="camep-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="camep-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/nuoccam.jpg" alt="Nước cam" class="menu-image">
                     </a>
                     <p>Nước cam ép</p>
                     <p>Giá: 75,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="caphesua-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="caphesua-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/caphesua.jpg" alt="Cà phê" class="menu-image">
                     </a>
                     <p>Cà phê sữa</p>
                     <p>Giá: 20,000 VND</p>
                 </div>
                 <div class="menu-item">
-                    <a href="tiger-detail.html" onclick="return checkTableNumber()"> <!-- Check table number before opening -->
+                    <a href="tiger-detail.html" onclick="storeCustomerData()"> <!-- Check table number before opening -->
                         <img src="images/tiger.jpg" alt="Bia tiger" class="menu-image">
                     </a>
                     <p>Bia tiger</p>
@@ -166,6 +166,8 @@
                 alert("Vui lòng nhập số bàn trước khi chọn món.");
                 return false; // Prevents link navigation
             }
+             // Save customer data to localStorage
+            storeCustomerData();
             return true;
         }
 
