@@ -128,3 +128,44 @@ function addItemToOrder(itemName, itemPrice) {
 
     alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial event listener setup remains the same
+
+    restoreCustomerInfo(); // Restore customer info if saved previously
+});
+
+// Confirm and save data function to check if the table number is valid
+function confirmAndSaveData() {
+    if (!isTableNumberValid()) {
+        alert("Vui lòng nhập số bàn trước khi xem món ăn.");
+        return false; // Prevent navigation if table number is not entered
+    }
+    storeCustomerData(); // Save customer data if table number is valid
+    return true;
+}
+
+// Modified viewOrder function to check table number before navigating
+function viewOrder() {
+    if (!isTableNumberValid()) {
+        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
+        return;
+    }
+    window.location.href = "view-order.html";
+}
+
+// Modified viewOrderStatus function to check table number before navigating
+function viewOrderStatus() {
+    if (!isTableNumberValid()) {
+        alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
+        return;
+    }
+    window.location.href = 'check-status.html';
+}
+
+// Helper function to check if the table number is valid
+function isTableNumberValid() {
+    const tableNumber = document.getElementById('tableNumber').value;
+    return tableNumber && tableNumber > 0;
+}
+
