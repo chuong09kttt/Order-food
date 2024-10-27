@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm Tra Trạng Thái Đơn Hàng</title>
+</head>
+<body>
+    <h1>Kiểm Tra Trạng Thái Đơn Hàng</h1>
+
+    <label for="tableNumberInput">Nhập số thứ tự bàn của bạn:</label>
+    <input type="number" id="tableNumberInput" placeholder="VD: 5">
+    <button onclick="checkStatus()">Kiểm tra trạng thái</button>
+
+    <p><strong>Trạng thái hiện tại:</strong> <span id="orderStatus">Chưa có dữ liệu</span></p>
+
+    <script>
+        function checkStatus() {
+            const tableNumber = document.getElementById('tableNumberInput').value;
+            const status = localStorage.getItem(`tableStatus_${tableNumber}`);
+            document.getElementById('orderStatus').textContent = status || "Bàn không có khách";
+        }
+    </script>
+</body>
+</html>
