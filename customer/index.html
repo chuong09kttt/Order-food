@@ -84,7 +84,7 @@
                 </div>
             </div><br>
             
-            <button type="button" onclick="viewOrder()">Xem đơn hàng</button>
+            <button type="button" onclick="saveOrder()">Xem đơn hàng</button><br>
             <label>Phương thức thanh toán:</label><br>
             <input type="radio" id="cash" name="paymentMethod" value="Tiền mặt" required>
             <label for="cash">Tiền mặt</label><br>
@@ -100,30 +100,11 @@
         
         form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
-
-            // Get values from form inputs
-            const tableNumber = document.getElementById('tableNumber').value;
-            const customerName = document.getElementById('customerName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-
-            // Save customer info to localStorage
-            localStorage.setItem('customerName', customerName);
-            localStorage.setItem('tableNumber', tableNumber);
-            localStorage.setItem('phoneNumber', phoneNumber);
-
-            // Here, you can add code to save the order if needed
-
-            // Optionally, you can redirect to another page after saving the order
-            // window.location.href = 'next-page.html';
+              // Gọi hàm saveOrder khi form được submit
+            saveOrder();
+            
         });
 
-        function viewOrder() {
-            // Redirect to view-order.html
-            window.location.href = 'view-order.html';
-        }
-    </script>
-
-    <script>
         function saveOrder() {
             // Lấy giá trị từ các ô input
             const customerName = document.getElementById('customerName').value;
