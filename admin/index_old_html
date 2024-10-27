@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đơn Hàng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Danh Sách Đơn Hàng</h1>
+    
+    <!-- Nút để xóa dữ liệu trong ngày và xuất ra file Excel -->
+    <button id="clearDailyData">Xóa Dữ Liệu Trong Ngày</button>
+    <button id="exportToExcel">Xuất Dữ Liệu Ra Excel</button>
+    
+    <table id="ordersTable">
+        <thead>
+            <tr>
+                <th>Thời gian</th>
+                <th>Món Ăn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Đơn hàng sẽ được tải ở đây -->
+        </tbody>
+    </table>
+
+    <script src="../scripts/view-orders.js"></script>
+</body>
+</html>
