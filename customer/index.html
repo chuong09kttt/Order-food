@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,46 +83,42 @@
                     <a href="tiger-detail.html" class="view-more">Xem thêm</a>
                 </div>
             </div><br>
-            
-            <button type="button" onclick="saveOrder()">Xem đơn hàng</button><br>
-            <button onclick="viewOrderStatus()" style="margin-left: 10px;">Xem trạng thái order</button>
+
+            <button type="button" onclick="saveOrder()">Xem đơn hàng</button>
+            <button type="button" onclick="viewOrderStatus()" style="margin-left: 10px;">Xem trạng thái order</button>
         </form>
     </section>
 
     <script>
         const form = document.getElementById('orderForm');
-        
+
+        // Prevent the default form submission
         form.addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
-              // Gọi hàm saveOrder khi form được submit
-            saveOrder();
-            
+            saveOrder(); // Call saveOrder function when the form is submitted
         });
 
         function saveOrder() {
-            // Lấy giá trị từ các ô input
+            // Get values from input fields
             const customerName = document.getElementById('customerName').value;
             const tableNumber = document.getElementById('tableNumber').value;
             const phoneNumber = document.getElementById('phoneNumber').value;
 
-            // Lưu dữ liệu vào localStorage
+            // Store data in localStorage
             localStorage.setItem('customerName', customerName);
             localStorage.setItem('tableNumber', tableNumber);
             localStorage.setItem('phoneNumber', phoneNumber);
 
-            // Chuyển hướng đến trang view-order.html
+            // Redirect to view-order.html
             window.location.href = 'view-order.html';
         }
 
-                    // Chức năng để xem trạng thái đơn hàng
+        // Function to view order status
         function viewOrderStatus() {
             window.location.href = 'check-status.html';
         }
-        
     </script>
 
-
-    
     <script src="scripts/order.js"></script>
 </body>
 </html>
