@@ -8,6 +8,12 @@ form.addEventListener('submit', function (event) {
     const tableNumber = document.getElementById('tableNumber').value; // Lấy số bàn
     const phoneNumber = document.getElementById('phoneNumber').value; // Lấy số điện thoại
 
+    localStorage.setItem('customerName', customerName);
+    localStorage.setItem('tableNumber', tableNumber);
+    localStorage.setItem('phoneNumber', phoneNumber);
+
+    
+    
     // Thu thập các món ăn đã chọn
     let selectedFoods = [];
     let data = new URLSearchParams();
