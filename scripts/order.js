@@ -95,64 +95,14 @@ function storeCustomerData() {
 // Kiểm tra và ngăn chọn món ăn nếu chưa nhập số bàn
 document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
     checkbox.addEventListener('click', function (event) {
-        const tableNumber = document.getElementById('tableNumber').value;
-
-        if (!tableNumber) {
+        if (!isTableNumberValid()) {
             event.preventDefault(); // Ngăn không cho checkbox được chọn
             alert("Vui lòng nhập số bàn trước khi chọn món.");
-        } else {
-            // Nếu có số bàn, lưu dữ liệu khách hàng
-            storeCustomerData();
         }
     });
 });
 
-// Xem đơn hàng
-function viewOrder() {
-    const tableNumber = document.getElementById('tableNumber').value;
-    if (!tableNumber) {
-        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
-        return;
-    }
-    window.location.href = "view-order.html";
-}
-
-// Thêm món vào đơn hàng với kiểm tra số bàn
-function addItemToOrder(itemName, itemPrice) {
-    if (!checkTableNumber()) return; // Ngăn chặn nếu không nhập số bàn
-
-    const quantity = parseInt(prompt(`Nhập số lượng cho ${itemName}:`)) || 1;
-    const orderItem = { name: itemName, price: itemPrice, quantity };
-
-    let order = JSON.parse(localStorage.getItem('order')) || [];
-    order.push(orderItem);
-    localStorage.setItem('order', JSON.stringify(order));
-
-    alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
-}
-
 // Kiểm tra số bàn trước khi cho phép chọn món
-function checkTableNumber() {
-    const tableNumber = document.getElementById('tableNumber').value;
-    if (!tableNumber) {
-        alert("Vui lòng nhập số bàn trước khi chọn món.");
-        return false; // Prevents link navigation
-    }
-    return true;
-}
-
-// Function to view order status
-function viewOrderStatus() {
-    const tableNumber = document.getElementById('tableNumber').value;
-    if (!tableNumber) {
-        alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
-        return;
-    }
-    window.location.href = 'check-status.html';
-}
-
-
-
 function isTableNumberValid() {
     const tableNumber = document.getElementById('tableNumber').value;
     if (!tableNumber) {
@@ -162,26 +112,28 @@ function isTableNumberValid() {
     return true;
 }
 
-// Update the existing code:
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    if (!isTableNumberValid()) return; // Check table number validity
+// Xem đơn hàng
+function viewOrder() {
+    if (!isTableNumberValid()) return; // Kiểm tra số bàn trước khi xem đơn hàng
+    window.location.href = "view-order.html";
+}
 
-    // Continue with order submission logic
-});
+// Function to view order status
+function viewOrderStatus() {
+    if (!isTableNumberValid()) return; // Kiểm tra số bàn trước khi xem trạng thái
+    window.location.href = 'check-status.html';
+}
 
-// In the checkbox listener:
-checkbox.addEventListener('click', function (event) {
-    if (!isTableNumberValid()) {
-        event.preventDefault(); // Prevent checking if no table number
-    } else {
-        storeCustomerData(); // If valid, store data
-    }
-});
+// Thêm món vào đơn hàng với kiểm tra số bàn
+function addItemToOrder(itemName, itemPrice) {
+    if (!isTableNumberValid()) return; // Ngăn chặn nếu không nhập số bàn
 
-// Update confirmAndSaveData function:
-function confirmAndSaveData() {
-    if (!isTableNumberValid()) return false; // Check and prevent navigation
-    storeCustomerData();
-    return true; // Allow navigation
+    const quantity = parseInt(prompt(`Nhập số lượng cho ${itemName}:`)) || 1;
+    const orderItem = { name: itemName, price: itemPrice, quantity };
+
+    let order = JSON.parse(localStorage.getItem('order')) || [];
+    order.push(orderItem);
+    localStorage.setItem('order', JSON.stringify(order));
+
+    alert(`Đã thêm ${orderItem.name} - Số lượng: ${orderItem.quantity} vào đơn hàng!`);
 }
