@@ -129,6 +129,19 @@
 
     <script>
 
+
+                // Lưu dữ liệu khách hàng vào localStorage
+        function storeCustomerData() {
+            const customerName = document.getElementById('customerName').value;
+            const tableNumber = document.getElementById('tableNumber').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            localStorage.setItem('customerName', customerName);
+            localStorage.setItem('tableNumber', tableNumber);
+            localStorage.setItem('phoneNumber', phoneNumber);
+        }
+
+        
          // Restore customer information from localStorage on page load
         window.onload = function () {
             const customerName = localStorage.getItem('customerName') || '';
