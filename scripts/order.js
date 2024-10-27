@@ -8,12 +8,11 @@ form.addEventListener('submit', function (event) {
     const tableNumber = document.getElementById('tableNumber').value; // Lấy số bàn
     const phoneNumber = document.getElementById('phoneNumber').value; // Lấy số điện thoại
 
+    // Lưu thông tin khách hàng vào localStorage
     localStorage.setItem('customerName', customerName);
     localStorage.setItem('tableNumber', tableNumber);
     localStorage.setItem('phoneNumber', phoneNumber);
 
-    
-    
     // Thu thập các món ăn đã chọn
     let selectedFoods = [];
     let data = new URLSearchParams();
@@ -62,6 +61,20 @@ form.addEventListener('submit', function (event) {
     });
 });
 
+// Hàm khôi phục thông tin khách hàng từ localStorage
+function restoreCustomerInfo() {
+    const customerName = localStorage.getItem('customerName') || '';
+    const tableNumber = localStorage.getItem('tableNumber') || '';
+    const phoneNumber = localStorage.getItem('phoneNumber') || '';
+
+    document.getElementById('customerName').value = customerName;
+    document.getElementById('tableNumber').value = tableNumber;
+    document.getElementById('phoneNumber').value = phoneNumber;
+}
+
+// Gọi hàm khôi phục thông tin khách hàng khi trang được tải
+window.onload = restoreCustomerInfo;
+
 // Thêm detail cho trang chi tiết
 function increaseQuantity() {
     const quantityInput = document.getElementById('quantity');
@@ -97,6 +110,7 @@ function addToOrder(itemName, itemPrice) {
         alert('Vui lòng chọn số lượng hợp lệ.');
     }
 }
+
 function viewOrder() {
     window.location.href = "view-order.html";
 }
