@@ -124,6 +124,7 @@ function addToOrder(itemName, itemPrice) {
 
 function viewOrder() {
     window.location.href = "view-order.html";
+    alert("Xem trạng thái đơn hàng!");
 }
 
 
