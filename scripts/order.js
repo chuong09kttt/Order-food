@@ -60,22 +60,22 @@ form.addEventListener('submit', function (event) {
 });
 
 // Thêm detail
-function increaseQuantity(foodName) {
-    const quantityInput = document.getElementById(`quantity_${foodName}`);
-    let quantity = parseInt(quantityInput.value);
-    quantityInput.value = quantity + 1;  // Tăng số lượng thêm 1
+function increaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    let quantity = parseInt(quantityInput.value) || 0; // Giá trị mặc định là 1 nếu trống
+    quantityInput.value = quantity + 1;  // Tăng số lượng lên 1
 }
 
-function decreaseQuantity(foodName) {
-    const quantityInput = document.getElementById(`quantity_${foodName}`);
-    let quantity = parseInt(quantityInput.value);
-    if (quantity > 1) {
+function decreaseQuantity() {
+    const quantityInput = document.getElementById('quantity');
+    let quantity = parseInt(quantityInput.value) || 0; // Giá trị mặc định là 1 nếu trống
+    if (quantity > 0) {  // Đảm bảo số lượng không xuống dưới 1
         quantityInput.value = quantity - 1;  // Giảm số lượng đi 1
     }
 }
 
 function addToOrder(itemName, itemPrice) {
-    const quantity = parseInt(document.getElementById(`quantity_${itemName}`).value);
+    const quantity = parseInt(document.getElementById('quantity').value);
     if (quantity > 0) {
         const orderItem = {
             name: itemName,
@@ -93,3 +93,5 @@ function addToOrder(itemName, itemPrice) {
         alert('Vui lòng chọn số lượng hợp lệ.');
     }
 }
+
+
