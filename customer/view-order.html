@@ -12,7 +12,6 @@
         <p><strong>Tên khách hàng:</strong> <span id="customerName"></span></p>
         <p><strong>Số bàn:</strong> <span id="tableNumber"></span></p>
         <p><strong>Số điện thoại:</strong> <span id="phoneNumber"></span></p>
-           
     </div>
     
     <h3>Phương thức thanh toán:</h3>
@@ -31,12 +30,19 @@
     </div>
     
     <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
+
     <script>
         // Lấy dữ liệu từ localStorage
+        const customerName = localStorage.getItem('customerName');
+        const tableNumber = localStorage.getItem('tableNumber');
+        const phoneNumber = localStorage.getItem('phoneNumber');
+
+        // Hiển thị dữ liệu lên trang HTML
         document.getElementById('customerName').textContent = customerName || "Không có dữ liệu";
         document.getElementById('tableNumber').textContent = tableNumber || "Không có dữ liệu";
         document.getElementById('phoneNumber').textContent = phoneNumber || "Không có dữ liệu";
-                // Hiển thị mã QR khi chọn phương thức "Chuyển khoản"
+
+        // Hiển thị mã QR khi chọn phương thức "Chuyển khoản"
         const cashOption = document.getElementById('cash');
         const bankTransferOption = document.getElementById('bankTransfer');
         const qrCodeSection = document.getElementById('qrCodeSection');
@@ -48,7 +54,6 @@
             qrCodeSection.style.display = 'none';
         });
 
-
         // Xác nhận đơn hàng
         function confirmOrder() {
             if (bankTransferOption.checked && !document.getElementById('transferConfirmed').checked) {
@@ -59,7 +64,6 @@
             alert("Đơn hàng đã được xác nhận!");
             window.location.href = 'order-status.html';
         }
-    
     </script>
   
 </body>
