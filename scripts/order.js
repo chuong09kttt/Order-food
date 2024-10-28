@@ -109,3 +109,17 @@ function handleFormSubmit(event) {
     storeCustomerData();
     alert("Đơn hàng của bạn đã được gửi thành công!");
 }
+ // Thêm sự kiện cho nút Cancel
+document.getElementById('cancelButton').addEventListener('click', function() {
+    // Xóa dữ liệu từ localStorage
+    localStorage.removeItem('customerName');
+    localStorage.removeItem('tableNumber');
+    localStorage.removeItem('phoneNumber');
+
+    // Xóa các giá trị trong các input
+    document.getElementById('customerName').value = '';
+    document.getElementById('tableNumber').value = '';
+    document.getElementById('phoneNumber').value = '';
+    
+    alert("Dữ liệu đã được xóa.");
+});
