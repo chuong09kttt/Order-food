@@ -38,10 +38,23 @@ function storeCustomerData() {
 
 // Hàm khôi phục thông tin khách hàng từ localStorage
 function restoreCustomerInfo() {
-    document.getElementById('customerName').value = localStorage.getItem('customerName') || '';
-    document.getElementById('tableNumber').value = localStorage.getItem('tableNumber') || '';
-    document.getElementById('phoneNumber').value = localStorage.getItem('phoneNumber') || '';
+    const customerNameInput = document.getElementById('customerName');
+    const tableNumberInput = document.getElementById('tableNumber');
+    const phoneNumberInput = document.getElementById('phoneNumber');
+
+    if (customerNameInput) {
+        customerNameInput.value = localStorage.getItem('customerName') || '';
+    }
+
+    if (tableNumberInput) {
+        tableNumberInput.value = localStorage.getItem('tableNumber') || '';
+    }
+
+    if (phoneNumberInput) {
+        phoneNumberInput.value = localStorage.getItem('phoneNumber') || '';
+    }
 }
+
 
 // Hàm xử lý khi xem đơn hàng
 function viewOrder() {
