@@ -1,4 +1,4 @@
-let isNavigatingBack = false;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     restoreCustomerInfo(); // Khôi phục thông tin khách hàng đã lưu (nếu có)
@@ -27,14 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Xóa dữ liệu khách hàng khỏi localStorage khi làm mới trang hoặc khi quay lại trang
-    window.addEventListener('beforeunload', () => {
-        if (!isNavigatingBack) {
-            localStorage.removeItem('customerName');
-            localStorage.removeItem('tableNumber');
-            localStorage.removeItem('phoneNumber');
-        }
-    });
+
+    
 });
 
 // Hàm kiểm tra số bàn
