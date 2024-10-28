@@ -58,7 +58,7 @@ function viewOrder() {
     storeCustomerData();
     window.location.href = "view-order.html";
 }
-
+window.viewOrder = viewOrder; // Đảm bảo hàm có sẵn cho HTML
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
     if (!tableNumber()) {
@@ -68,6 +68,7 @@ function viewOrderStatus() {
     storeCustomerData();
     window.location.href = "check-status.html";
 }
+window.viewOrderStatus = viewOrderStatus; // Đảm bảo hàm có sẵn cho HTML
 
 // Xử lý gửi đơn hàng
 function handleFormSubmit(event) {
