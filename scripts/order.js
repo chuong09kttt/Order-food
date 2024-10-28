@@ -39,7 +39,7 @@ function restoreCustomerInfo() {
 
 // Xác nhận và lưu dữ liệu nếu số bàn hợp lệ
 function confirmAndSaveData() {
-    if (!isTableNumberValid()) {
+    if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi chọn món.");
         return false;
     }
@@ -59,7 +59,7 @@ function viewOrder() {
 
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
-    if (!isTableNumberValid()) {
+    if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
         return;
     }
@@ -71,7 +71,7 @@ function viewOrderStatus() {
 function handleFormSubmit(event) {
     event.preventDefault();
 
-    if (!isTableNumberValid()) {
+    if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi đặt món.");
         return;
     }
