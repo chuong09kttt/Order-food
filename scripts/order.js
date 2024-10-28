@@ -13,6 +13,12 @@ function isTableNumberValid() {
     return tableNumber && parseInt(tableNumber) > 0;
 }
 
+// Hàm kiểm tra số bàn
+function tableNumber() {
+    const tableNumber = document.getElementById("tableNumber").value;
+    return tableNumber && tableNumber > 0;
+}
+
 // Hàm lưu dữ liệu khách hàng vào localStorage
 function storeCustomerData() {
     const customerName = document.getElementById('customerName').value;
@@ -42,8 +48,8 @@ function confirmAndSaveData() {
 }
 
 // Hàm xử lý khi xem đơn hàng
-function viewOrder() {
-    if (!isTableNumberValid()) {
+function viewOrder() {   
+    if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
         return;
     }
