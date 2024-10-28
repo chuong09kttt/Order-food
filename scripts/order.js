@@ -82,7 +82,7 @@ function viewOrder() {
     }
     storeCustomerData();
     // Chuyển hướng đến trang xem đơn hàng
-    window.location.href = "view-order.html";
+    window.location.href = "../customer/view-order.html";
 }
 
 // Hàm xử lý khi xem trạng thái đơn hàng
@@ -94,7 +94,7 @@ function viewOrderStatus() {
     }
     storeCustomerData();
     // Chuyển hướng đến trang trạng thái đơn hàng
-    window.location.href = "check-status.html";
+    window.location.href = "../customer/check-status.html";
 }
 
 // Xử lý gửi đơn hàng
