@@ -52,6 +52,7 @@
         <div class="button-container">
             <button type="button" id="viewOrderButton">Xem đơn</button>
             <button type="button" id="viewOrderStatus">Trạng thái</button>
+            <button type="button" id="cancelButton">Cancel</button> <!-- Thêm nút Cancel -->
         </div>
 
         <form id="orderForm">
@@ -128,5 +129,22 @@
 
     <!-- Moved script tag to the end of body -->
     <script src="../scripts/order.js"></script>
+    <script>
+        // Thêm sự kiện cho nút Cancel
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            // Xóa dữ liệu từ localStorage
+            localStorage.removeItem('customerName');
+            localStorage.removeItem('tableNumber');
+            localStorage.removeItem('phoneNumber');
+
+            // Xóa các giá trị trong các input
+            document.getElementById('customerName').value = '';
+            document.getElementById('tableNumber').value = '';
+            document.getElementById('phoneNumber').value = '';
+            
+            alert("Dữ liệu đã được xóa.");
+        });
+    </script>
+    
 </body>
 </html>
