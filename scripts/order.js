@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', handleFormSubmit);
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
+    if (viewOrderButton) {
+        viewOrderButton.addEventListener('click', viewOrder);
+    }
+});
+
 
 // Kiểm tra số bàn trước khi cho phép chọn món
 function isTableNumberValid() {
@@ -50,7 +57,8 @@ function confirmAndSaveData() {
 }
 
 // Hàm xử lý khi xem đơn hàng
-function viewOrder() {   
+function viewOrder() { 
+    console.log("viewOrder function called"); // Kiểm tra xem hàm có được gọi không
     try {
         if (!tableNumber()) {
             alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
