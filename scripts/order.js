@@ -39,12 +39,14 @@ function restoreCustomerInfo() {
 
 // Xác nhận và lưu dữ liệu nếu số bàn hợp lệ
 function confirmAndSaveData() {
-    if (!tableNumber()) {
+    const tableNumber = document.getElementById("tableNumber").value;
+    if (!tableNumber || tableNumber <= 0) {
         alert("Vui lòng nhập số bàn trước khi chọn món.");
-        return false;
+        return false; // Ngăn chặn việc mở liên kết nếu không có số bàn
     }
-    storeCustomerData();
-    return true;
+
+    storeCustomerData(); // Lưu dữ liệu nếu số bàn hợp lệ
+    return true; // Cho phép mở liên kết nếu số bàn đã nhập hợp lệ
 }
 
 // Hàm xử lý khi xem đơn hàng
