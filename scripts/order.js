@@ -123,3 +123,16 @@ document.getElementById('cancelButton').addEventListener('click', function() {
     
     alert("Dữ liệu đã được xóa.");
 });
+function confirmAndSaveData() {
+    if (!tableNumber()) {
+        alert("Vui lòng nhập số bàn trước khi chọn món.");
+        return false; // Không chuyển hướng nếu số bàn chưa được nhập
+    }
+
+    // Lưu dữ liệu khách hàng vào localStorage
+    storeCustomerData();
+
+    // Xác nhận người dùng trước khi chuyển hướng
+    return confirm("Bạn có chắc chắn muốn xem chi tiết món ăn này không?");
+}
+
