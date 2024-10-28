@@ -1,4 +1,5 @@
 let isNavigatingBack = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     restoreCustomerInfo(); // Khôi phục thông tin khách hàng đã lưu (nếu có)
 
@@ -19,12 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         viewOrderStatusButton.addEventListener('click', viewOrderStatus);
     }
 
-     // Xử lý sự kiện khi người dùng quay lại trang
+    // Xử lý sự kiện khi người dùng quay lại trang
     window.addEventListener('pageshow', (event) => {
         if (event.persisted) {
             isNavigatingBack = true; // Đánh dấu là đang quay lại trang
         }
-
     });
 
     // Xóa dữ liệu khách hàng khỏi localStorage khi làm mới trang hoặc khi quay lại trang
@@ -35,8 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('phoneNumber');
         }
     });
-    
-        
 });
 
 // Hàm kiểm tra số bàn
@@ -74,7 +72,6 @@ function restoreCustomerInfo() {
         phoneNumberInput.value = localStorage.getItem('phoneNumber') || '';
     }
 }
-
 
 // Hàm xử lý khi xem đơn hàng
 function viewOrder() {
