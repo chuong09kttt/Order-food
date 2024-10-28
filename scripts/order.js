@@ -16,7 +16,7 @@ function isTableNumberValid() {
 // Hàm kiểm tra số bàn
 function tableNumber() {
     const tableNumber = document.getElementById("tableNumber").value;
-    return tableNumber && tableNumber > 0;
+    return tableNumber && parseInt(tableNumber) > 0; // Đảm bảo giá trị là số nguyên lớn hơn 0
 }
 
 // Hàm lưu dữ liệu khách hàng vào localStorage
