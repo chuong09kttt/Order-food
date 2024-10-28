@@ -136,3 +136,7 @@ function confirmAndSaveData() {
     //return confirm("Bạn có chắc chắn muốn xem chi tiết món ăn này không?");
 }
 
+const viewOrderButton = document.getElementById('viewOrderButton');
+const viewOrderStatusButton = document.getElementById('viewOrderStatus');
+const cancelButton = document.getElementById('cancelButton');
+
