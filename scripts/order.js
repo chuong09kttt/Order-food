@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     restoreCustomerInfo(); // Khôi phục thông tin khách hàng đã lưu (nếu có)
 
@@ -20,15 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
         viewOrderStatusButton.addEventListener('click', viewOrderStatus);
     }
 
+    // Lưu dữ liệu vào localStorage khi người dùng nhập vào các trường
+    const customerNameInput = document.getElementById('customerName');
+    const tableNumberInput = document.getElementById('tableNumber');
+    const phoneNumberInput = document.getElementById('phoneNumber');
+
+    if (customerNameInput) {
+        customerNameInput.addEventListener('input', storeCustomerData);
+    }
+    if (tableNumberInput) {
+        tableNumberInput.addEventListener('input', storeCustomerData);
+    }
+    if (phoneNumberInput) {
+        phoneNumberInput.addEventListener('input', storeCustomerData);
+    }
+
     // Xử lý sự kiện khi người dùng quay lại trang
     window.addEventListener('pageshow', (event) => {
         if (event.persisted) {
             isNavigatingBack = true; // Đánh dấu là đang quay lại trang
         }
     });
-
-
-    
 });
 
 // Hàm kiểm tra số bàn
@@ -69,25 +79,21 @@ function restoreCustomerInfo() {
 
 // Hàm xử lý khi xem đơn hàng
 function viewOrder() {
-    console.log("viewOrder function called"); // Kiểm tra xem hàm có được gọi không
     if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
         return;
     }
     storeCustomerData();
-    // Chuyển hướng đến trang xem đơn hàng
     window.location.href = "../customer/view-order.html";
 }
 
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
-    console.log("viewOrderStatus function called"); // Kiểm tra xem hàm có được gọi không
     if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
         return;
     }
     storeCustomerData();
-    // Chuyển hướng đến trang trạng thái đơn hàng
     window.location.href = "../customer/check-status.html";
 }
 
@@ -101,6 +107,5 @@ function handleFormSubmit(event) {
     }
 
     storeCustomerData();
-    // Thêm mã xử lý đơn hàng tại đây, ví dụ: gửi lên server hoặc hiển thị thông tin đơn hàng
     alert("Đơn hàng của bạn đã được gửi thành công!");
 }
