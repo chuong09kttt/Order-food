@@ -103,17 +103,8 @@ function isTableNumberValid() {
     return tableNumber && tableNumber > 0;
 }
 
-// Xem đơn hàng
-function viewOrder() {
-    if (!isTableNumberValid()) return;
-    window.location.href = "view-order.html";
-}
 
-// Xem trạng thái đơn hàng
-function viewOrderStatus() {
-    if (!isTableNumberValid()) return;
-    window.location.href = 'check-status.html';
-}
+
 
 // Thêm món vào đơn hàng
 function addItemToOrder(itemName, itemPrice) {
@@ -145,14 +136,23 @@ function confirmAndSaveData() {
     return true;
 }
 
-// Modified viewOrder function to check table number before navigating
+
+// Hàm kiểm tra số bàn hợp lệ (cần tùy chỉnh theo cách bạn kiểm tra số bàn)
+function isTableNumberValid() {
+    const tableNumber = localStorage.getItem('tableNumber');
+    return tableNumber && tableNumber.trim() !== ''; // Kiểm tra xem đã nhập số bàn và không để trống
+}
+
+// Hàm xem đơn hàng
 function viewOrder() {
     if (!isTableNumberValid()) {
-        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
-        return;
+        alert("Vui lòng nhập số bàn trước khi xem đơn hàng!");
+        return; // Không cho phép chuyển trang nếu chưa có số bàn
     }
-    window.location.href = "view-order.html";
+    window.location.href = "view-order.html"; // Chuyển trang nếu đã nhập số bàn
 }
+
+
 
 // Modified viewOrderStatus function to check table number before navigating
 function viewOrderStatus() {
@@ -163,9 +163,5 @@ function viewOrderStatus() {
     window.location.href = 'check-status.html';
 }
 
-// Helper function to check if the table number is valid
-function isTableNumberValid() {
-    const tableNumber = document.getElementById('tableNumber').value;
-    return tableNumber && tableNumber > 0;
-}
+
 
