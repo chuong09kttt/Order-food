@@ -6,28 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', handleFormSubmit);
     }
 
-        // Đăng ký sự kiện cho nút "Xem đơn"
+    // Đăng ký sự kiện cho nút "Xem đơn"
     const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
     if (viewOrderButton) {
         viewOrderButton.addEventListener('click', viewOrder);
     }
-    
 
-    
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
-    if (viewOrderButton) {
-        viewOrderButton.addEventListener('click', viewOrder);
+    // Đăng ký sự kiện cho nút "Trạng thái"
+    const viewOrderStatusButton = document.querySelector('button[onclick="viewOrderStatus()"]');
+    if (viewOrderStatusButton) {
+        viewOrderStatusButton.addEventListener('click', viewOrderStatus);
     }
 });
-
-
-// Kiểm tra số bàn trước khi cho phép chọn món
-function isTableNumberValid() {
-    const tableNumber = document.getElementById('tableNumber').value;
-    return tableNumber && parseInt(tableNumber) > 0;
-}
 
 // Hàm kiểm tra số bàn
 function tableNumber() {
@@ -53,83 +43,30 @@ function restoreCustomerInfo() {
     document.getElementById('phoneNumber').value = localStorage.getItem('phoneNumber') || '';
 }
 
-// Xác nhận và lưu dữ liệu nếu số bàn hợp lệ
-function confirmAndSaveData() {
-    const tableNumber = document.getElementById("tableNumber").value;
-    if (!tableNumber || tableNumber <= 0) {
-        alert("Vui lòng nhập số bàn trước khi chọn món.");
-        return false; // Ngăn chặn việc mở liên kết nếu không có số bàn
-    }
-
-    storeCustomerData(); // Lưu dữ liệu nếu số bàn hợp lệ
-    return true; // Cho phép mở liên kết nếu số bàn đã nhập hợp lệ
-}
-
 // Hàm xử lý khi xem đơn hàng
-function viewOrder() { 
+function viewOrder() {
     console.log("viewOrder function called"); // Kiểm tra xem hàm có được gọi không
-    try {
-        if (!tableNumber()) {
-            alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
-            return;
-        }
-        storeCustomerData();
-
-        // Kiểm tra xem file view-order.html có tồn tại không
-        const request = new XMLHttpRequest();
-        request.open('HEAD', 'view-order.html', false);
-        request.send();
-        
-        if (request.status !== 200) {
-            alert("Trang view-order.html không tồn tại hoặc không thể truy cập.");
-            return;
-        }
-
-        // Nếu file tồn tại, chuyển hướng đến trang
-        window.location.href = "view-order.html";
-    } catch (error) {
-        console.error("Lỗi khi chuyển hướng:", error);
-        alert("Đã xảy ra lỗi khi chuyển hướng đến trang xem đơn hàng.");
+    if (!tableNumber()) {
+        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
+        return;
     }
+    storeCustomerData();
+    // Chuyển hướng đến trang xem đơn hàng
+    window.location.href = "view-order.html";
 }
-window.viewOrder = viewOrder; // Đảm bảo hàm có sẵn cho HTML
-
-
 
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
-    try {
-        if (!tableNumber()) {
-            alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
-            return;
-        }
-        storeCustomerData();
-
-        // Kiểm tra xem file check-status.html có tồn tại không
-        const request = new XMLHttpRequest();
-        request.open('HEAD', 'check-status.html', false);
-        request.send();
-        
-        if (request.status !== 200) {
-            alert("Trang check-status.html không tồn tại hoặc không thể truy cập.");
-            return;
-        }
-
-        // Nếu file tồn tại, chuyển hướng đến trang
-        window.location.href = "check-status.html";
-    } catch (error) {
-        console.error("Lỗi khi chuyển hướng:", error);
-        alert("Đã xảy ra lỗi khi chuyển hướng đến trang trạng thái đơn hàng.");
+    console.log("viewOrderStatus function called"); // Kiểm tra xem hàm có được gọi không
+    if (!tableNumber()) {
+        alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
+        return;
     }
+    storeCustomerData();
+    // Chuyển hướng đến trang trạng thái đơn hàng
+    window.location.href = "check-status.html";
 }
 
-
-
-    
-window.viewOrderStatus = viewOrderStatus; // Đảm bảo hàm có sẵn cho HTML
-
-
-    
 // Xử lý gửi đơn hàng
 function handleFormSubmit(event) {
     event.preventDefault();
