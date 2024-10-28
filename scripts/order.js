@@ -5,6 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', handleFormSubmit);
     }
+
+        // Đăng ký sự kiện cho nút "Xem đơn"
+    const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
+    if (viewOrderButton) {
+        viewOrderButton.addEventListener('click', viewOrder);
+    }
+    
+
+    
 });
 document.addEventListener('DOMContentLoaded', () => {
     const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
