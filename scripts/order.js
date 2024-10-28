@@ -133,6 +133,6 @@ function confirmAndSaveData() {
     storeCustomerData();
 
     // Xác nhận người dùng trước khi chuyển hướng
-    return confirm("Bạn có chắc chắn muốn xem chi tiết món ăn này không?");
+    //return confirm("Bạn có chắc chắn muốn xem chi tiết món ăn này không?");
 }
 
