@@ -51,25 +51,68 @@ function confirmAndSaveData() {
 
 // Hàm xử lý khi xem đơn hàng
 function viewOrder() {   
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
-        return;
+    try {
+        if (!tableNumber()) {
+            alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
+            return;
+        }
+        storeCustomerData();
+
+        // Kiểm tra xem file view-order.html có tồn tại không
+        const request = new XMLHttpRequest();
+        request.open('HEAD', 'view-order.html', false);
+        request.send();
+        
+        if (request.status !== 200) {
+            alert("Trang view-order.html không tồn tại hoặc không thể truy cập.");
+            return;
+        }
+
+        // Nếu file tồn tại, chuyển hướng đến trang
+        window.location.href = "view-order.html";
+    } catch (error) {
+        console.error("Lỗi khi chuyển hướng:", error);
+        alert("Đã xảy ra lỗi khi chuyển hướng đến trang xem đơn hàng.");
     }
-    storeCustomerData();
-    window.location.href = "view-order.html";
 }
 window.viewOrder = viewOrder; // Đảm bảo hàm có sẵn cho HTML
+
+
+
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
-        return;
+    try {
+        if (!tableNumber()) {
+            alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
+            return;
+        }
+        storeCustomerData();
+
+        // Kiểm tra xem file check-status.html có tồn tại không
+        const request = new XMLHttpRequest();
+        request.open('HEAD', 'check-status.html', false);
+        request.send();
+        
+        if (request.status !== 200) {
+            alert("Trang check-status.html không tồn tại hoặc không thể truy cập.");
+            return;
+        }
+
+        // Nếu file tồn tại, chuyển hướng đến trang
+        window.location.href = "check-status.html";
+    } catch (error) {
+        console.error("Lỗi khi chuyển hướng:", error);
+        alert("Đã xảy ra lỗi khi chuyển hướng đến trang trạng thái đơn hàng.");
     }
-    storeCustomerData();
-    window.location.href = "check-status.html";
 }
+
+
+
+    
 window.viewOrderStatus = viewOrderStatus; // Đảm bảo hàm có sẵn cho HTML
 
+
+    
 // Xử lý gửi đơn hàng
 function handleFormSubmit(event) {
     event.preventDefault();
