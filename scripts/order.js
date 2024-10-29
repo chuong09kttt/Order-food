@@ -1,61 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    restoreCustomerInfo(); // Khôi phục thông tin khách hàng đã lưu (nếu có)
+    // Khôi phục thông tin khách hàng đã lưu (nếu có)
+    restoreCustomerInfo();
 
+    // Các phần tử cần thao tác
     const form = document.getElementById('orderForm');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
-
     const viewOrderButton = document.getElementById('viewOrderButton');
     const viewOrderStatusButton = document.getElementById('viewOrderStatusButton');
-    
-    if (viewOrderButton) {
-        viewOrderButton.addEventListener('click', viewOrder);
-    } else {
-        console.warn("viewOrderButton không tồn tại.");
-    }
-
-    const viewOrderStatusButton = document.getElementById('viewOrderStatusButton');
-    if (viewOrderStatusButton) {
-        viewOrderStatusButton.addEventListener('click', viewOrderStatus);
-    } else {
-        console.warn("viewOrderStatusButton không tồn tại.");
-    }
-
-
     const cancelButton = document.getElementById('cancelButton');
-    if (cancelButton) {
-        cancelButton.addEventListener('click', function() {
-            // Xóa dữ liệu từ localStorage
-            localStorage.removeItem('customerName');
-            localStorage.removeItem('tableNumber');
-            localStorage.removeItem('phoneNumber');
+    const customerInputs = {
+        customerName: document.getElementById('customerName'),
+        tableNumber: document.getElementById('tableNumber'),
+        phoneNumber: document.getElementById('phoneNumber')
+    };
 
-            // Xóa các giá trị trong các input
-            document.getElementById('customerName').value = '';
-            document.getElementById('tableNumber').value = '';
-            document.getElementById('phoneNumber').value = '';
+    // Đăng ký sự kiện cho các phần tử nếu tồn tại
+    form?.addEventListener('submit', handleFormSubmit);
+    viewOrderButton?.addEventListener('click', viewOrder);
+    viewOrderStatusButton?.addEventListener('click', viewOrderStatus);
 
-            alert("Dữ liệu đã được xóa.");
-        });
-    } else {
-        console.warn("Nút cancelButton không tồn tại trong DOM.");
-    }
+    cancelButton?.addEventListener('click', () => {
+        clearCustomerData();
+        alert("Dữ liệu đã được xóa.");
+    });
 
-    
     // Lưu dữ liệu vào localStorage khi người dùng nhập vào các trường
-    const customerNameInput = document.getElementById('customerName');
-    const tableNumberInput = document.getElementById('tableNumber');
-    const phoneNumberInput = document.getElementById('phoneNumber');
-
-    if (customerNameInput) {
-        customerNameInput.addEventListener('input', storeCustomerData);
-    }
-    if (tableNumberInput) {
-        tableNumberInput.addEventListener('input', storeCustomerData);
-    }
-    if (phoneNumberInput) {
-        phoneNumberInput.addEventListener('input', storeCustomerData);
+    for (const input in customerInputs) {
+        customerInputs[input]?.addEventListener('input', storeCustomerData);
     }
 
     // Xử lý sự kiện khi người dùng quay lại trang
@@ -68,38 +38,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Hàm kiểm tra số bàn
 function tableNumber() {
-    const tableNumber = document.getElementById("tableNumber").value;
-    return tableNumber && parseInt(tableNumber) > 0; // Đảm bảo giá trị là số nguyên lớn hơn 0
+    const tableNumberValue = document.getElementById("tableNumber")?.value;
+    return tableNumberValue && parseInt(tableNumberValue) > 0; // Đảm bảo giá trị là số nguyên lớn hơn 0
 }
 
 // Hàm lưu dữ liệu khách hàng vào localStorage
 function storeCustomerData() {
-    const customerName = document.getElementById('customerName').value;
-    const tableNumber = document.getElementById('tableNumber').value;
-    const phoneNumber = document.getElementById('phoneNumber').value;
+    const customerName = document.getElementById('customerName')?.value;
+    const tableNumber = document.getElementById('tableNumber')?.value;
+    const phoneNumber = document.getElementById('phoneNumber')?.value;
 
-    localStorage.setItem('customerName', customerName);
-    localStorage.setItem('tableNumber', tableNumber);
-    localStorage.setItem('phoneNumber', phoneNumber);
+    localStorage.setItem('customerName', customerName || '');
+    localStorage.setItem('tableNumber', tableNumber || '');
+    localStorage.setItem('phoneNumber', phoneNumber || '');
+}
+
+// Hàm xóa dữ liệu khách hàng khỏi localStorage và làm trống các ô input
+function clearCustomerData() {
+    localStorage.removeItem('customerName');
+    localStorage.removeItem('tableNumber');
+    localStorage.removeItem('phoneNumber');
+    
+    document.getElementById('customerName').value = '';
+    document.getElementById('tableNumber').value = '';
+    document.getElementById('phoneNumber').value = '';
 }
 
 // Hàm khôi phục thông tin khách hàng từ localStorage
 function restoreCustomerInfo() {
-    const customerNameInput = document.getElementById('customerName');
-    const tableNumberInput = document.getElementById('tableNumber');
-    const phoneNumberInput = document.getElementById('phoneNumber');
-
-    if (customerNameInput) {
-        customerNameInput.value = localStorage.getItem('customerName') || '';
-    }
-
-    if (tableNumberInput) {
-        tableNumberInput.value = localStorage.getItem('tableNumber') || '';
-    }
-
-    if (phoneNumberInput) {
-        phoneNumberInput.value = localStorage.getItem('phoneNumber') || '';
-    }
+    document.getElementById('customerName').value = localStorage.getItem('customerName') || '';
+    document.getElementById('tableNumber').value = localStorage.getItem('tableNumber') || '';
+    document.getElementById('phoneNumber').value = localStorage.getItem('phoneNumber') || '';
 }
 
 // Hàm xử lý khi xem đơn hàng
@@ -134,34 +103,11 @@ function handleFormSubmit(event) {
     storeCustomerData();
     alert("Đơn hàng của bạn đã được gửi thành công!");
 }
- // Thêm sự kiện cho nút Cancel
-document.getElementById('cancelButton').addEventListener('click', function() {
-    // Xóa dữ liệu từ localStorage
-    localStorage.removeItem('customerName');
-    localStorage.removeItem('tableNumber');
-    localStorage.removeItem('phoneNumber');
 
-    // Xóa các giá trị trong các input
-    document.getElementById('customerName').value = '';
-    document.getElementById('tableNumber').value = '';
-    document.getElementById('phoneNumber').value = '';
-    
-    alert("Dữ liệu đã được xóa.");
-});
 function confirmAndSaveData() {
     if (!tableNumber()) {
         alert("Vui lòng nhập số bàn trước khi chọn món.");
         return false; // Không chuyển hướng nếu số bàn chưa được nhập
     }
-
-    // Lưu dữ liệu khách hàng vào localStorage
     storeCustomerData();
-
-    // Xác nhận người dùng trước khi chuyển hướng
-    //return confirm("Bạn có chắc chắn muốn xem chi tiết món ăn này không?");
 }
-
-const viewOrderButton = document.getElementById('viewOrderButton');
-const viewOrderStatusButton = document.getElementById('viewOrderStatus');
-const cancelButton = document.getElementById('cancelButton');
-
