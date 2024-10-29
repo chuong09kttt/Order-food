@@ -1,127 +1,63 @@
-const sheetUrl = 'https://docs.google.com/spreadsheets/d/1pwAjkmlcBtC7o3qw1jTJBlnqgGRll2pNvblYpvVz1aM/gviz/tq?tqx=out:json';
+// Hàm lấy dữ liệu từ localStorage và hiển thị dưới dạng danh sách
+function displayOrdersFromLocalStorage() {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const ordersList = document.querySelector('#ordersList');
+    
+    ordersList.innerHTML = ''; // Xóa dữ liệu cũ trong danh sách
 
-fetch(sheetUrl)
-    .then(res => res.text())
-    .then(data => {
-        console.log(data);  // In dữ liệu để kiểm tra
+    // Duyệt qua từng đơn hàng và tạo các phần tử HTML
+    orders.forEach(order => {
+        const orderItem = document.createElement('div');
+        orderItem.className = 'order-item';
 
-        // Chuyển đổi kết quả JSON từ Google Sheets thành định dạng có thể sử dụng
-        const json = JSON.parse(data.substr(47).slice(0, -2));
-        const rows = json.table.rows;
-        const cols = json.table.cols;  // Lấy thông tin các cột để tạo tiêu đề
+        orderItem.innerHTML = `
+            <p><strong>Thời gian đặt hàng:</strong> ${order.time}</p>
+            <p><strong>Số bàn:</strong> ${order.tableNumber}</p>
+            <p><strong>Tên khách hàng:</strong> ${order.customerName}</p>
+            <p><strong>Số điện thoại:</strong> ${order.phoneNumber}</p>
+            <p><strong>Danh sách món ăn:</strong></p>
+            <ul>
+                ${order.items.map(item => `<li>${item.name} - Số lượng: ${item.quantity}</li>`).join('')}
+            </ul>
+            <p><strong>Tổng giá:</strong> ${order.totalPrice} VNĐ</p>
+            <p><strong>Trạng thái món ăn:</strong> ${order.status}</p>
+            <hr>
+        `;
 
-        const tableHead = document.querySelector('#ordersTable thead');
-        const tableBody = document.querySelector('#ordersTable tbody');
-        tableBody.innerHTML = '';
-        tableHead.innerHTML = '';
-
-        // Tạo hàng tiêu đề từ thông tin cột
-        const headerRow = document.createElement('tr');
-        cols.forEach(col => {
-            const headerCell = document.createElement('th');
-            headerCell.textContent = col.label || 'Không có tiêu đề';  // Hiển thị tiêu đề cột hoặc "Không có tiêu đề"
-            headerRow.appendChild(headerCell);
-        });
-        tableHead.appendChild(headerRow);
-
-        // Tạo các hàng dữ liệu
-        rows.forEach(row => {
-            const rowElement = document.createElement('tr');
-
-            // Đảm bảo mỗi cột đều có dữ liệu hoặc hiển thị ô trống nếu không có dữ liệu
-            cols.forEach((_, index) => {
-                const cell = row.c[index];  // Duyệt qua từng cột bằng chỉ số
-                const cellElement = document.createElement('td');
-                cellElement.textContent = cell && cell.v ? cell.v : '';  // Hiển thị giá trị nếu có, nếu không để trống
-                rowElement.appendChild(cellElement);
-            });
-
-            tableBody.appendChild(rowElement);
-        });
-    })
-    .catch(error => {
-        console.error('Lỗi khi lấy dữ liệu từ Google Sheets: ', error);
+        ordersList.appendChild(orderItem);
     });
-
-// Hàm để tải dữ liệu đơn hàng từ server
-async function loadOrders() {
-    try {
-        const response = await fetch('/api/getOrders'); // Đảm bảo endpoint đúng với server của bạn
-        const orders = await response.json();
-
-        const tableBody = document.querySelector('#ordersTable tbody');
-        tableBody.innerHTML = ''; // Xóa dữ liệu cũ
-
-        orders.forEach(order => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td>${order.time}</td><td>${order.item}</td>`;
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error loading orders:', error);
-    }
 }
 
-// Hàm xóa dữ liệu trong ngày
-async function clearDailyData() {
-    try {
-        const response = await fetch('/api/clearDailyData', { method: 'DELETE' });
-        if (response.ok) {
-            alert('Dữ liệu trong ngày đã được xóa.');
-            loadOrders(); // Tải lại dữ liệu sau khi xóa
-        } else {
-            alert('Không thể xóa dữ liệu.');
-        }
-    } catch (error) {
-        console.error('Error clearing daily data:', error);
-    }
+// Hàm lưu một đơn hàng mới vào localStorage
+function saveOrderToLocalStorage(order) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
 }
 
-// Hàm xuất dữ liệu ra file Excel
-async function exportToExcel() {
-    try {
-        const response = await fetch('/api/exportToExcel');
-        if (response.ok) {
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'orders.xlsx';
-            link.click();
-            window.URL.revokeObjectURL(url);
-        } else {
-            alert('Không thể xuất dữ liệu.');
-        }
-    } catch (error) {
-        console.error('Error exporting to Excel:', error);
-    }
-}
-
-// Thêm sự kiện cho các nút
-document.getElementById('clearDailyData').addEventListener('click', clearDailyData);
-document.getElementById('exportToExcel').addEventListener('click', exportToExcel);
-
-// Cập nhật dữ liệu mỗi 5 giây
-setInterval(loadOrders, 5000);
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const orderSummary = document.getElementById('orderSummary');
-    const order = JSON.parse(localStorage.getItem('order')) || [];
-
-    if (order.length === 0) {
-        orderSummary.innerHTML = '<p>Chưa có món ăn nào được thêm vào đơn hàng.</p>';
-        return;
-    }
-
-    order.forEach(item => {
-        orderSummary.innerHTML += `<p>${item.name} - Số lượng: ${item.quantity}</p>`;
-    });
-});
-
+// Hàm tạo đơn hàng mẫu (có thể thay thế bằng dữ liệu từ form)
 function submitOrder() {
-    // Logic to send the order details to the server or Google Form
+    const order = {
+        time: new Date().toLocaleTimeString(),
+        tableNumber: '01',
+        customerName: 'Nguyễn Văn A',
+        phoneNumber: '0123456789',
+        items: [
+            { name: 'Cà phê sữa', quantity: 2 },
+            { name: 'Bánh mì', quantity: 1 }
+        ],
+        totalPrice: 70000,
+        status: 'Đang chuẩn bị'
+    };
+    saveOrderToLocalStorage(order);
     alert('Đơn hàng đã được gửi thành công!');
 }
 
+// Sự kiện để thêm đơn hàng khi nhấn nút "Gửi Đơn Hàng" (giả sử nút có id là "submitOrderButton")
+document.getElementById('submitOrderButton').addEventListener('click', submitOrder);
 
+// Cập nhật danh sách đơn hàng từ localStorage mỗi 5 giây
+setInterval(displayOrdersFromLocalStorage, 5000);
+
+// Hiển thị dữ liệu ngay khi trang tải
+document.addEventListener('DOMContentLoaded', displayOrdersFromLocalStorage);
