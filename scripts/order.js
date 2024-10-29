@@ -18,6 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
         viewOrderStatus.addEventListener('click', viewOrderStatus);
     }
 
+
+    const cancelButton = document.getElementById('cancelButton');
+    if (cancelButton) {
+        cancelButton.addEventListener('click', function() {
+            // Xóa dữ liệu từ localStorage
+            localStorage.removeItem('customerName');
+            localStorage.removeItem('tableNumber');
+            localStorage.removeItem('phoneNumber');
+
+            // Xóa các giá trị trong các input
+            document.getElementById('customerName').value = '';
+            document.getElementById('tableNumber').value = '';
+            document.getElementById('phoneNumber').value = '';
+
+            alert("Dữ liệu đã được xóa.");
+        });
+    } else {
+        console.warn("Nút cancelButton không tồn tại trong DOM.");
+    }
+
+    
     // Lưu dữ liệu vào localStorage khi người dùng nhập vào các trường
     const customerNameInput = document.getElementById('customerName');
     const tableNumberInput = document.getElementById('tableNumber');
