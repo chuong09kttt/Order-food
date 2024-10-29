@@ -10,7 +10,6 @@
         .order-list { width: 100%; margin: 0 auto; border-collapse: collapse; }
         .order-list th, .order-list td { padding: 10px; border: 1px solid #ccc; text-align: left; }
         .order-list th { background-color: #f2f2f2; }
-        .order-item { margin-bottom: 15px; }
         .status-paid { color: green; }
         .status-unpaid { color: red; }
         .status-completed { color: blue; }
@@ -22,6 +21,7 @@
     <table class="order-list">
         <thead>
             <tr>
+                <th>Thời Gian Đặt Hàng</th>
                 <th>Số Bàn</th>
                 <th>Tên Khách Hàng</th>
                 <th>Số Điện Thoại</th>
@@ -48,17 +48,16 @@
 
             const orders = getOrdersFromLocalStorage();
 
-            orders.forEach((order, index) => {
+            orders.forEach(order => {
                 const row = document.createElement('tr');
 
                 // Tạo ô dữ liệu cho từng thuộc tính của đơn hàng
                 row.innerHTML = `
+                    <td>${order.time}</td>
                     <td>${order.tableNumber || 'N/A'}</td>
                     <td>${order.customerName || 'N/A'}</td>
                     <td>${order.phoneNumber || 'N/A'}</td>
-                    <td>
-                        ${order.items.map(item => `${item.name} - SL: ${item.quantity}`).join(', ')}
-                    </td>
+                    <td>${order.items.map(item => `${item.name} - SL: ${item.quantity}`).join(', ')}</td>
                     <td>${order.totalPrice || 0} VND</td>
                     <td class="${getStatusClass(order.status)}">${order.status}</td>
                 `;
@@ -80,6 +79,9 @@
 
         // Khởi tạo và hiển thị danh sách đơn hàng
         document.addEventListener('DOMContentLoaded', displayOrders);
+
+        // Cập nhật danh sách đơn hàng theo thời gian thực
+        setInterval(displayOrders, 5000);
     </script>
 
 </body>
