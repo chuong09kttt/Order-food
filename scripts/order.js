@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("viewOrderButton không tồn tại.");
     }
 
+    const viewOrderStatusButton = document.getElementById('viewOrderStatusButton');
     if (viewOrderStatusButton) {
         viewOrderStatusButton.addEventListener('click', viewOrderStatus);
     } else {
