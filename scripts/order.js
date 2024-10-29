@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Đăng ký sự kiện cho các phần tử nếu tồn tại
     form?.addEventListener('submit', handleFormSubmit);
-    viewOrderButton?.addEventListener('click', viewOrder);
-    viewOrderStatusButton?.addEventListener('click', viewOrderStatus);
+    viewOrderButton?.addEventListener('click', () => confirmTableNumber(viewOrder));
+    viewOrderStatusButton?.addEventListener('click', () => confirmTableNumber(viewOrderStatus));
 
     cancelButton?.addEventListener('click', () => {
         clearCustomerData();
@@ -40,6 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function tableNumber() {
     const tableNumberValue = document.getElementById("tableNumber")?.value;
     return tableNumberValue && parseInt(tableNumberValue) > 0; // Đảm bảo giá trị là số nguyên lớn hơn 0
+}
+
+// Hàm yêu cầu nhập số bàn nếu chưa nhập trước khi chọn món hoặc xem đơn hàng
+function confirmTableNumber(callback) {
+    if (!tableNumber()) {
+        alert("Vui lòng nhập số bàn trước khi thực hiện thao tác này.");
+        return;
+    }
+    storeCustomerData();
+    callback();
 }
 
 // Hàm lưu dữ liệu khách hàng vào localStorage
@@ -73,21 +83,11 @@ function restoreCustomerInfo() {
 
 // Hàm xử lý khi xem đơn hàng
 function viewOrder() {
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi xem đơn hàng.");
-        return;
-    }
-    storeCustomerData();
     window.location.href = "../customer/view-order.html";
 }
 
 // Hàm xử lý khi xem trạng thái đơn hàng
 function viewOrderStatus() {
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi xem trạng thái đơn hàng.");
-        return;
-    }
-    storeCustomerData();
     window.location.href = "../customer/check-status.html";
 }
 
