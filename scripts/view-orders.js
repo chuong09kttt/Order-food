@@ -1,63 +1,45 @@
-// Hàm lấy dữ liệu từ localStorage và hiển thị dưới dạng danh sách
-function displayOrdersFromLocalStorage() {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const ordersList = document.querySelector('#ordersList');
-    
-    ordersList.innerHTML = ''; // Xóa dữ liệu cũ trong danh sách
+// Hàm lấy dữ liệu đơn hàng từ localStorage
+function getOrdersFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('orders')) || [];
+}
 
-    // Duyệt qua từng đơn hàng và tạo các phần tử HTML
+// Hàm hỗ trợ để xác định lớp CSS cho trạng thái
+function getStatusClass(status) {
+    switch (status) {
+        case 'Đã thanh toán': return 'status-paid';
+        case 'Chưa thanh toán': return 'status-unpaid';
+        case 'Đã kết thúc': return 'status-completed';
+        default: return '';
+    }
+}
+
+// Hàm hiển thị đơn hàng dưới dạng bảng
+function displayOrders() {
+    const orderTableBody = document.getElementById('orderTableBody');
+    orderTableBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+    const orders = getOrdersFromLocalStorage();
+
     orders.forEach(order => {
-        const orderItem = document.createElement('div');
-        orderItem.className = 'order-item';
+        const row = document.createElement('tr');
 
-        orderItem.innerHTML = `
-            <p><strong>Thời gian đặt hàng:</strong> ${order.time}</p>
-            <p><strong>Số bàn:</strong> ${order.tableNumber}</p>
-            <p><strong>Tên khách hàng:</strong> ${order.customerName}</p>
-            <p><strong>Số điện thoại:</strong> ${order.phoneNumber}</p>
-            <p><strong>Danh sách món ăn:</strong></p>
-            <ul>
-                ${order.items.map(item => `<li>${item.name} - Số lượng: ${item.quantity}</li>`).join('')}
-            </ul>
-            <p><strong>Tổng giá:</strong> ${order.totalPrice} VNĐ</p>
-            <p><strong>Trạng thái món ăn:</strong> ${order.status}</p>
-            <hr>
+        // Tạo các ô cho từng thuộc tính của đơn hàng
+        row.innerHTML = `
+            <td>${order.tableNumber || 'N/A'}</td>
+            <td>${order.customerName || 'N/A'}</td>
+            <td>${order.phoneNumber || 'N/A'}</td>
+            <td>${order.items.map(item => `${item.name} - SL: ${item.quantity}`).join(', ')}</td>
+            <td>${order.totalPrice || 0} VND</td>
+            <td class="${getStatusClass(order.status)}">${order.status}</td>
         `;
 
-        ordersList.appendChild(orderItem);
+        // Thêm hàng vào bảng
+        orderTableBody.appendChild(row);
     });
 }
 
-// Hàm lưu một đơn hàng mới vào localStorage
-function saveOrderToLocalStorage(order) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.push(order);
-    localStorage.setItem('orders', JSON.stringify(orders));
-}
+// Khởi tạo và hiển thị danh sách đơn hàng
+document.addEventListener('DOMContentLoaded', displayOrders);
 
-// Hàm tạo đơn hàng mẫu (có thể thay thế bằng dữ liệu từ form)
-function submitOrder() {
-    const order = {
-        time: new Date().toLocaleTimeString(),
-        tableNumber: '01',
-        customerName: 'Nguyễn Văn A',
-        phoneNumber: '0123456789',
-        items: [
-            { name: 'Cà phê sữa', quantity: 2 },
-            { name: 'Bánh mì', quantity: 1 }
-        ],
-        totalPrice: 70000,
-        status: 'Đang chuẩn bị'
-    };
-    saveOrderToLocalStorage(order);
-    alert('Đơn hàng đã được gửi thành công!');
-}
-
-// Sự kiện để thêm đơn hàng khi nhấn nút "Gửi Đơn Hàng" (giả sử nút có id là "submitOrderButton")
-document.getElementById('submitOrderButton').addEventListener('click', submitOrder);
-
-// Cập nhật danh sách đơn hàng từ localStorage mỗi 5 giây
-setInterval(displayOrdersFromLocalStorage, 5000);
-
-// Hiển thị dữ liệu ngay khi trang tải
-document.addEventListener('DOMContentLoaded', displayOrdersFromLocalStorage);
+// Cập nhật danh sách đơn hàng theo thời gian thực
+setInterval(displayOrders, 5000);
