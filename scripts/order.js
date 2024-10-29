@@ -6,16 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', handleFormSubmit);
     }
 
-    // Đăng ký sự kiện cho nút "Xem đơn"
-    const viewOrderButton = document.querySelector('button[onclick="viewOrder()"]');
+    const viewOrderButton = document.getElementById('viewOrderButton');
+    const viewOrderStatusButton = document.getElementById('viewOrderStatusButton');
+    
     if (viewOrderButton) {
         viewOrderButton.addEventListener('click', viewOrder);
+    } else {
+        console.warn("viewOrderButton không tồn tại.");
     }
 
-    // Đăng ký sự kiện cho nút "Trạng thái"
-    const viewOrderStatus = document.querySelector('button[onclick="viewOrderStatus()"]');
-    if (viewOrderStatus) {
-        viewOrderStatus.addEventListener('click', viewOrderStatus);
+    if (viewOrderStatusButton) {
+        viewOrderStatusButton.addEventListener('click', viewOrderStatus);
+    } else {
+        console.warn("viewOrderStatusButton không tồn tại.");
     }
 
 
