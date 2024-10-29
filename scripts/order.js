@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Đăng ký sự kiện cho nút "Trạng thái"
-    const viewOrderStatusButton = document.querySelector('button[onclick="viewOrderStatus()"]');
-    if (viewOrderStatusButton) {
-        viewOrderStatusButton.addEventListener('click', viewOrderStatus);
+    const viewOrderStatus = document.querySelector('button[onclick="viewOrderStatus()"]');
+    if (viewOrderStatus) {
+        viewOrderStatus.addEventListener('click', viewOrderStatus);
     }
 
     // Lưu dữ liệu vào localStorage khi người dùng nhập vào các trường
