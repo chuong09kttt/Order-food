@@ -111,3 +111,29 @@ function confirmAndSaveData() {
     }
     storeCustomerData();
 }
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    if (!tableNumber()) {
+        alert("Vui lòng nhập số bàn trước khi đặt món.");
+        return;
+    }
+
+    storeCustomerData();
+
+    // Lưu thông tin đơn hàng vào localStorage
+    const order = {
+        customerName: customerInputs.customerName.value,
+        tableNumber: customerInputs.tableNumber.value,
+        phoneNumber: customerInputs.phoneNumber.value,
+        items: [/* Điền danh sách món ăn */],
+        totalPrice: 0, // Tính tổng giá
+        status: "Chưa thanh toán"
+    };
+
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    alert("Đơn hàng của bạn đã được gửi thành công!");
+}
