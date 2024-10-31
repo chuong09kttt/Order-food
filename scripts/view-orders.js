@@ -1,86 +1,125 @@
-// Hàm lấy dữ liệu đơn hàng từ localStorage
-function getOrdersFromLocalStorage() {
-    return JSON.parse(localStorage.getItem('orders')) || [];
-}
+const sheetUrl = 'https://docs.google.com/spreadsheets/d/1pwAjkmlcBtC7o3qw1jTJBlnqgGRll2pNvblYpvVz1aM/gviz/tq?tqx=out:json';
 
-// Hàm hỗ trợ để xác định lớp CSS cho trạng thái
-function getStatusClass(status) {
-    switch (status) {
-        case 'Đã thanh toán': return 'status-paid';
-        case 'Chưa thanh toán': return 'status-unpaid';
-        case 'Đã kết thúc': return 'status-completed';
-        default: return '';
+fetch(sheetUrl)
+    .then(res => res.text())
+    .then(data => {
+        console.log(data);  // In dữ liệu để kiểm tra
+
+        // Chuyển đổi kết quả JSON từ Google Sheets thành định dạng có thể sử dụng
+        const json = JSON.parse(data.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        const cols = json.table.cols;  // Lấy thông tin các cột để tạo tiêu đề
+
+        const tableHead = document.querySelector('#ordersTable thead');
+        const tableBody = document.querySelector('#ordersTable tbody');
+        tableBody.innerHTML = '';
+        tableHead.innerHTML = '';
+
+        // Tạo hàng tiêu đề từ thông tin cột
+        const headerRow = document.createElement('tr');
+        cols.forEach(col => {
+            const headerCell = document.createElement('th');
+            headerCell.textContent = col.label || 'Không có tiêu đề';  // Hiển thị tiêu đề cột hoặc "Không có tiêu đề"
+            headerRow.appendChild(headerCell);
+        });
+        tableHead.appendChild(headerRow);
+
+        // Tạo các hàng dữ liệu
+        rows.forEach(row => {
+            const rowElement = document.createElement('tr');
+
+            // Đảm bảo mỗi cột đều có dữ liệu hoặc hiển thị ô trống nếu không có dữ liệu
+            cols.forEach((_, index) => {
+                const cell = row.c[index];  // Duyệt qua từng cột bằng chỉ số
+                const cellElement = document.createElement('td');
+                cellElement.textContent = cell && cell.v ? cell.v : '';  // Hiển thị giá trị nếu có, nếu không để trống
+                rowElement.appendChild(cellElement);
+            });
+
+            tableBody.appendChild(rowElement);
+        });
+    })
+    .catch(error => {
+        console.error('Lỗi khi lấy dữ liệu từ Google Sheets: ', error);
+    });
+
+// Hàm để tải dữ liệu đơn hàng từ server
+async function loadOrders() {
+    try {
+        const response = await fetch('/api/getOrders'); // Đảm bảo endpoint đúng với server của bạn
+        const orders = await response.json();
+
+        const tableBody = document.querySelector('#ordersTable tbody');
+        tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${order.time}</td><td>${order.item}</td>`;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error loading orders:', error);
     }
 }
 
-// Hàm hiển thị đơn hàng dưới dạng bảng
-function displayOrders() {
-    const orderTableBody = document.getElementById('orderTableBody');
-    orderTableBody.innerHTML = ''; // Xóa dữ liệu cũ
-
-    const orders = getOrdersFromLocalStorage();
-
-    orders.forEach(order => {
-        const row = document.createElement('tr');
-
-        // Tạo các ô cho từng thuộc tính của đơn hàng
-        row.innerHTML = `
-            <td>${order.tableNumber || 'N/A'}</td>
-            <td>${order.customerName || 'N/A'}</td>
-            <td>${order.phoneNumber || 'N/A'}</td>
-            <td>${order.items.map(item => `${item.name} - SL: ${item.quantity}`).join(', ')}</td>
-            <td>${order.totalPrice || 0} VND</td>
-            <td class="${getStatusClass(order.status)}">${order.status}</td>
-        `;
-
-        // Thêm hàng vào bảng
-        orderTableBody.appendChild(row);
-    });
+// Hàm xóa dữ liệu trong ngày
+async function clearDailyData() {
+    try {
+        const response = await fetch('/api/clearDailyData', { method: 'DELETE' });
+        if (response.ok) {
+            alert('Dữ liệu trong ngày đã được xóa.');
+            loadOrders(); // Tải lại dữ liệu sau khi xóa
+        } else {
+            alert('Không thể xóa dữ liệu.');
+        }
+    } catch (error) {
+        console.error('Error clearing daily data:', error);
+    }
 }
 
-// Khởi tạo và hiển thị danh sách đơn hàng
-document.addEventListener('DOMContentLoaded', displayOrders);
+// Hàm xuất dữ liệu ra file Excel
+async function exportToExcel() {
+    try {
+        const response = await fetch('/api/exportToExcel');
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'orders.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            alert('Không thể xuất dữ liệu.');
+        }
+    } catch (error) {
+        console.error('Error exporting to Excel:', error);
+    }
+}
 
-// Cập nhật danh sách đơn hàng theo thời gian thực
-setInterval(displayOrders, 5000);
+// Thêm sự kiện cho các nút
+document.getElementById('clearDailyData').addEventListener('click', clearDailyData);
+document.getElementById('exportToExcel').addEventListener('click', exportToExcel);
 
-// Hàm xử lý gửi đơn hàng
-function handleFormSubmit(event) {
-    event.preventDefault();
+// Cập nhật dữ liệu mỗi 5 giây
+setInterval(loadOrders, 5000);
 
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi đặt món.");
+
+document.addEventListener('DOMContentLoaded', function () {
+    const orderSummary = document.getElementById('orderSummary');
+    const order = JSON.parse(localStorage.getItem('order')) || [];
+
+    if (order.length === 0) {
+        orderSummary.innerHTML = '<p>Chưa có món ăn nào được thêm vào đơn hàng.</p>';
         return;
     }
 
-    // Lấy thông tin khách hàng và đơn hàng
-    const customerName = document.getElementById('customerName')?.value;
-    const tableNumber = document.getElementById('tableNumber')?.value;
-    const phoneNumber = document.getElementById('phoneNumber')?.value;
-    
-    // Thông tin đơn hàng mẫu (cần sửa lại nếu có thông tin cụ thể)
-    const items = [
-        { name: "Món A", quantity: 2 },
-        { name: "Món B", quantity: 1 }
-    ];
-    const totalPrice = 200000;  // Tổng giá ví dụ
+    order.forEach(item => {
+        orderSummary.innerHTML += `<p>${item.name} - Số lượng: ${item.quantity}</p>`;
+    });
+});
 
-    // Tạo đối tượng đơn hàng
-    const order = {
-        tableNumber,
-        customerName,
-        phoneNumber,
-        items,
-        totalPrice,
-        status: 'Chưa thanh toán',  // Trạng thái mặc định là chưa thanh toán
-        time: new Date().toLocaleString()  // Thời gian đặt hàng
-    };
-
-    // Lấy danh sách đơn hàng từ localStorage và thêm đơn hàng mới
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.push(order);
-    localStorage.setItem('orders', JSON.stringify(orders));
-
-    alert("Đơn hàng của bạn đã được gửi thành công!");
+function submitOrder() {
+    // Logic to send the order details to the server or Google Form
+    alert('Đơn hàng đã được gửi thành công!');
 }
-
