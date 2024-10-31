@@ -150,6 +150,22 @@
                 alert("Đơn hàng chưa được xác nhận. Vui lòng xác nhận rằng bạn đã chuyển khoản.");
                 return;
             }
+            
+            // Lưu thông tin đơn hàng vào localStorage
+            const order = {
+                customerName: customerName,
+                tableNumber: tableNumber,
+                phoneNumber: phoneNumber,
+                items: JSON.parse(localStorage.getItem('cart')) || [],
+                totalPrice: document.getElementById('totalValue').textContent,
+                paymentMethod: bankTransferOption.checked ? "Chuyển khoản" : "Tiền mặt",
+                status: "Đã xác nhận"
+            };
+                 // Lấy danh sách đơn hàng hiện tại, thêm đơn hàng mới, và lưu lại
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            // Cập nhật trạng thái đơn hàng và chuyển hướng
             localStorage.setItem('orderStatus', 'pending');
             alert("Đơn hàng đã được xác nhận!");
             window.location.href = 'order-status.html';
