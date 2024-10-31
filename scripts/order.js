@@ -91,18 +91,7 @@ function viewOrderStatus() {
     window.location.href = "../customer/check-status.html";
 }
 
-// Xử lý gửi đơn hàng
-function handleFormSubmit(event) {
-    event.preventDefault();
 
-    if (!tableNumber()) {
-        alert("Vui lòng nhập số bàn trước khi đặt món.");
-        return;
-    }
-
-    storeCustomerData();
-    alert("Đơn hàng của bạn đã được gửi thành công!");
-}
 
 function confirmAndSaveData() {
     if (!tableNumber()) {
