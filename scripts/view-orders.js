@@ -119,7 +119,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
 function submitOrder() {
-    // Logic to send the order details to the server or Google Form
+    const order = JSON.parse(localStorage.getItem('order')) || [];
+    
+    if (order.length === 0) {
+        alert('Chưa có món ăn nào trong đơn hàng để gửi.');
+        return;
+    }
+
+    // Gửi từng mục đơn hàng lên Google Form
+    order.forEach(item => {
+        const formData = new FormData();
+        formData.append('entry.XXXXXX', item.name); // Thay XXXXXX bằng entry ID của trường tên món ăn
+        formData.append('entry.YYYYYY', item.quantity); // Thay YYYYYY bằng entry ID của trường số lượng
+
+        fetch('https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse', {
+            method: 'POST',
+            mode: 'no-cors', // Để bỏ qua CORS (Cross-Origin Resource Sharing)
+            body: formData
+        }).then(response => {
+            console.log('Đã gửi dữ liệu lên Google Form');
+        }).catch(error => {
+            console.error('Lỗi khi gửi dữ liệu lên Google Form:', error);
+        });
+    });
+
     alert('Đơn hàng đã được gửi thành công!');
 }
+
+
+
