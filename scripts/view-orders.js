@@ -131,9 +131,20 @@ function submitOrder() {
     // Gửi từng mục đơn hàng lên Google Form
     order.forEach(item => {
         const formData = new FormData();
-        formData.append('entry.XXXXXX', item.name); // Thay XXXXXX bằng entry ID của trường tên món ăn
-        formData.append('entry.YYYYYY', item.quantity); // Thay YYYYYY bằng entry ID của trường số lượng
+        formData.append('entry.77411834', item.name); // Thay XXXXXX bằng entry ID của trường tên món ăn
+        formData.append('entry.1357572145', item.quantity); // Thay YYYYYY bằng entry ID của trường số lượng
+        formData.append('entry.1433881729', item.quantity); // Thay YYYYYY
+        formData.append('entry.974872402', item.quantity); // Thay YYYYYY
+        formData.append('entry.687928994', item.quantity);
+        formData.append('entry.1698670265', item.quantity);
+        formData.append('entry.1740240441', item.quantity);
+        formData.append('entry.701833790', item.quantity);
+        formData.append('entry.2145223647', item.quantity);
+        formData.append('entry.261073239', item.quantity);
+        formData.append('entry.885982600', item.quantity);
+        
 
+        
         fetch('https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse', {
             method: 'POST',
             mode: 'no-cors', // Để bỏ qua CORS (Cross-Origin Resource Sharing)
