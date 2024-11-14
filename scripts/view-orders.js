@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
 function submitOrder() {
     const order = JSON.parse(localStorage.getItem('order')) || [];
     
@@ -131,6 +132,8 @@ function submitOrder() {
     // Gửi từng mục đơn hàng lên Google Form
     order.forEach(item => {
         const formData = new FormData();
+        formData.append('entry.77411834', item.name); // Thay bằng ID trường "tên món ăn" trên form của bạn
+        formData.append('entry.1357572145', item.quantity); // Thay bằng ID trường "số lượng" trên form của bạn
         formData.append('entry.77411834', item.name); // Thay XXXXXX bằng entry ID của trường tên món ăn
         formData.append('entry.1357572145', item.quantity); // Thay YYYYYY bằng entry ID của trường số lượng
         formData.append('entry.1433881729', item.quantity); // Thay YYYYYY
@@ -142,12 +145,14 @@ function submitOrder() {
         formData.append('entry.2145223647', item.quantity);
         formData.append('entry.261073239', item.quantity);
         formData.append('entry.885982600', item.quantity);
-        
+
 
         
+        // Nếu có thêm trường nào khác, hãy thêm vào như các dòng trên
+
         fetch('https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse', {
             method: 'POST',
-            mode: 'no-cors', // Để bỏ qua CORS (Cross-Origin Resource Sharing)
+            mode: 'no-cors', // Bỏ qua CORS (Cross-Origin Resource Sharing)
             body: formData
         }).then(response => {
             console.log('Đã gửi dữ liệu lên Google Form');
@@ -157,7 +162,12 @@ function submitOrder() {
     });
 
     alert('Đơn hàng đã được gửi thành công!');
+    localStorage.removeItem('order'); // Xóa đơn hàng khỏi bộ nhớ sau khi gửi
 }
+
+
+
+
 
 
 
