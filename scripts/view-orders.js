@@ -7,7 +7,7 @@ function submitOrder() {
     }
 
     // Đường dẫn Google Form của bạn, sử dụng định dạng /formResponse
-    const formUrl = 'https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse';
+    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse';
 
     // Gửi từng mục đơn hàng lên Google Form
     order.forEach(item => {
