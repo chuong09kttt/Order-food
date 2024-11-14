@@ -150,7 +150,8 @@ function submitOrder() {
         
         // Nếu có thêm trường nào khác, hãy thêm vào như các dòng trên
 
-        fetch('https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse', {
+        //fetch('https://docs.google.com/forms/d/e/1t14-HXXEqszV_TosZtVunKvwNy1lEYRc-U7tZya67Hk/formResponse', {
+        fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse', {
             method: 'POST',
             mode: 'no-cors', // Bỏ qua CORS (Cross-Origin Resource Sharing)
             body: formData
