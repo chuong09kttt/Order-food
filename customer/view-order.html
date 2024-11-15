@@ -3,68 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Tin Đơn Hàng</title>
+    <title>Xem Đơn Hàng</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background-image: url('images/background.jpg'); /* Đặt hình nền cho trang */
-            background-size: cover; /* Đảm bảo hình nền bao phủ toàn bộ trang */
-            color: #ffffff; /* Màu chữ cho dễ đọc */
-            font-family: 'Arial', sans-serif; /* Kiểu chữ */
-            margin: 0; /* Xóa lề mặc định */
-            padding: 0; /* Xóa padding mặc định */
+            background-image: url('images/background.jpg');
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         h1 {
-            text-align: center; /* Căn giữa tiêu đề */
-            margin-top: 20px; /* Khoảng cách phía trên tiêu đề */
-            font-size: 2.5em; /* Kích thước chữ lớn */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Đổ bóng cho chữ */
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.7); /* Nền bán trong suốt */
-            border-radius: 10px; /* Bo góc */
-            padding: 20px; /* Padding cho các phần tử */
-            margin: 20px; /* Khoảng cách giữa các phần tử */
-            max-width: 800px; /* Giới hạn chiều rộng */
-            margin-left: auto; /* Căn giữa */
-            margin-right: auto; /* Căn giữa */
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
         }
         h3 {
-            color: #ffcc00; /* Màu cho tiêu đề cấp 3 */
-            text-align: left; /* Căn trái tiêu đề */
+            color: #ffcc00;
         }
         button {
-            background-color: #BC8F8F; /* Màu nền cho nút */
-            color: white; /* Màu chữ cho nút */
-            border: none; /* Không có đường viền */
-            padding: 10px 20px; /* Padding cho nút */
-            border-radius: 5px; /* Bo góc cho nút */
-            cursor: pointer; /* Chuyển đổi con trỏ thành hình bàn tay */
-            font-size: 1em; /* Kích thước chữ cho nút */
-            display: block; /* Để nút chiếm toàn bộ chiều ngang */
-            margin: 20px auto; /* Căn giữa nút */
-            transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+            background-color: #BC8F8F;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #ff3300; /* Thay đổi màu khi di chuột vào nút */
+            background-color: #ff3300;
         }
-        img {
-            display: block; /* Căn giữa hình ảnh */
-            margin: 0 auto; /* Căn giữa hình ảnh */
-            max-width: 100%; /* Giới hạn chiều rộng hình ảnh */
-            height: auto; /* Tự động điều chỉnh chiều cao */
-        }
-        /* Thêm kiểu cho các nút hủy */
         .cancel-button {
-            background-color: #ff3333; /* Màu nền cho nút hủy */
+            background-color: #ff3333;
         }
         .cancel-button:hover {
-            background-color: #ff0000; /* Thay đổi màu khi di chuột vào nút hủy */
+            background-color: #ff0000;
         }
     </style>
 </head>
 <body>
-    <h1>Đơn Hàng</h1>
+    <h1>Thông Tin Đơn Hàng</h1>
     
     <div class="container">
         <h3>KHÁCH HÀNG</h3>
@@ -92,8 +82,7 @@
         </div>
         
         <button onclick="confirmOrder()">Xác nhận đơn hàng</button>
-        <button class="cancel-button" onclick="cancelOrder()">Hủy Đơn Hàng</button> <!-- Nút Hủy Đơn Hàng -->
-    
+        <button class="cancel-button" onclick="cancelOrder()">Hủy Đơn Hàng</button>
     </div>
 
     <script>
@@ -142,7 +131,7 @@
             document.getElementById('totalValue').textContent = totalValue + " VND";
         }
 
-        displayOrderDetails(); // Call the function to display order details
+        displayOrderDetails(); // Gọi để hiển thị chi tiết đơn hàng
 
         // Xác nhận đơn hàng
         function confirmOrder() {
@@ -150,8 +139,7 @@
                 alert("Đơn hàng chưa được xác nhận. Vui lòng xác nhận rằng bạn đã chuyển khoản.");
                 return;
             }
-            
-            // Lưu thông tin đơn hàng vào localStorage
+
             const order = {
                 customerName: customerName,
                 tableNumber: tableNumber,
@@ -161,33 +149,36 @@
                 paymentMethod: bankTransferOption.checked ? "Chuyển khoản" : "Tiền mặt",
                 status: "Đã xác nhận"
             };
-                 // Lấy danh sách đơn hàng hiện tại, thêm đơn hàng mới, và lưu lại
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            // Cập nhật trạng thái đơn hàng và chuyển hướng
-            localStorage.setItem('orderStatus', 'pending');
-            alert("Đơn hàng đã được xác nhận!");
-            window.location.href = 'order-status.html';
+
+            const formData = new FormData();
+            formData.append("entry.1234567890", order.customerName); // Sửa ID
+            formData.append("entry.0987654321", order.tableNumber); // Sửa ID
+            formData.append("entry.1122334455", order.phoneNumber); // Sửa ID
+            formData.append("entry.6677889900", JSON.stringify(order.items)); // Sửa ID
+            formData.append("entry.5544332211", order.totalPrice); // Sửa ID
+            formData.append("entry.4433221100", order.paymentMethod); // Sửa ID
+
+            fetch("https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse", { // Thay xxxxxxxxxx bằng ID Google Form
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            })
+            .then(() => {
+                alert("Đơn hàng đã được gửi thành công!");
+                localStorage.removeItem('cart');
+                window.location.href = 'order-status.html';
+            })
+            .catch(error => {
+                console.error("Gửi đơn hàng thất bại:", error);
+                alert("Có lỗi xảy ra khi gửi đơn hàng. Vui lòng thử lại.");
+            });
         }
 
         // Hủy đơn hàng
         function cancelOrder() {
-            // Xóa dữ liệu từ localStorage
-            localStorage.removeItem('customerName');
-            localStorage.removeItem('tableNumber');
-            localStorage.removeItem('phoneNumber');
-            localStorage.removeItem('cart'); // Xóa giỏ hàng
-            localStorage.removeItem('orderStatus'); // Xóa trạng thái đơn hàng
-
-            // Làm trống các trường hiển thị
-            document.getElementById('customerName').textContent = "Không có dữ liệu";
-            document.getElementById('tableNumber').textContent = "Không có dữ liệu";
-            document.getElementById('phoneNumber').textContent = "Không có dữ liệu";
-            document.getElementById('orderDetails').innerHTML = "<p>Giỏ hàng trống.</p>";
-            document.getElementById('totalValue').textContent = "0 VND";
-
+            localStorage.clear(); // Xóa toàn bộ dữ liệu localStorage
             alert("Đơn hàng đã được hủy!");
+            location.reload();
         }
     </script>
 </body>
