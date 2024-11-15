@@ -4,12 +4,16 @@ function loadOrders() {
     fetch(sheetUrl)
         .then(res => res.text())
         .then(data => {
+            // Chuyển đổi dữ liệu JSON từ Google Sheets
             const json = JSON.parse(data.substr(47).slice(0, -2));
             const rows = json.table.rows;
             const cols = json.table.cols;
 
+            // Lấy các phần tử trong DOM để hiển thị bảng
             const tableHead = document.querySelector('#ordersTable thead');
             const tableBody = document.querySelector('#ordersTable tbody');
+
+            // Xóa dữ liệu cũ
             tableBody.innerHTML = '';
             tableHead.innerHTML = '';
 
@@ -38,6 +42,9 @@ function loadOrders() {
             console.error('Lỗi khi lấy dữ liệu từ Google Sheets: ', error);
         });
 }
+
+// Gọi loadOrders ngay lập tức khi trang được tải
+document.addEventListener('DOMContentLoaded', loadOrders);
 
 // Gọi loadOrders mỗi 5 giây để cập nhật bảng đơn hàng
 setInterval(loadOrders, 5000);
