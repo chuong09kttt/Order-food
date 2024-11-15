@@ -151,13 +151,20 @@
             };
 
             const formData = new FormData();
-            formData.append("entry.1234567890", order.customerName); // Sửa ID
-            formData.append("entry.0987654321", order.tableNumber); // Sửa ID
-            formData.append("entry.1122334455", order.phoneNumber); // Sửa ID
-            formData.append("entry.6677889900", JSON.stringify(order.items)); // Sửa ID
-            formData.append("entry.5544332211", order.totalPrice); // Sửa ID
-            formData.append("entry.4433221100", order.paymentMethod); // Sửa ID
+            formData.append("entry.1433881729", order.customerName); // Sửa ID
+            formData.append("entry.1357572145", order.tableNumber); // Sửa ID
+            formData.append("entry.77411834", order.phoneNumber); // Sửa ID
+            formData.append("entry.974872402", JSON.stringify(order.items)); // Phở
+            formData.append("entry.687928994", order.totalPrice); // Bún chả
+            formData.append("entry.1698670265", order.paymentMethod); // Cơm Tấm
+            formData.append("entry.1740240441", JSON.stringify(order.items)); // Gỏi cuốn
+            formData.append("entry.701833790", order.totalPrice); // Sinh tố bơ
+            formData.append("entry.2145223647", order.paymentMethod); // Cam ép
+            formData.append("entry.261073239", JSON.stringify(order.items)); // Bia Tiger
+            formData.append("entry.885982600", order.totalPrice); // Cà phê Sữa
+ 
 
+            
             fetch("https://docs.google.com/forms/d/e/1FAIpQLSePyfbACtc5MFkZLjRu3xVIwVYnWTh3aMo2813Jp3xYv0-K5A/formResponse", { // Thay xxxxxxxxxx bằng ID Google Form
                 method: "POST",
                 mode: "no-cors",
