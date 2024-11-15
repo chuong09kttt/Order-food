@@ -3,25 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiger - Chi Tiết</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bia Tiger - Chi Tiết</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        /* Thêm một số CSS cơ bản để tạo giao diện tốt hơn */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .menu-detail {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: auto;
+            width: 300px;
+        }
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+        input[type="number"] {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
     <a href="index.html" class="back-button">← Menu</a>
     <div class="menu-detail">
-        <h1>Tiger</h1>
+        <h1>Bia tiger</h1>
         <img src="images/tiger.jpg" alt="Tiger" class="menu-detail-image">
         <p>Giá: 50,000 VND</p>
 
         <div class="quantity-controls">
             <button onclick="decreaseQuantity()">-</button>
-            <input type="number" id="quantity" value="1" min="1">
+            <input type="number" id="quantity" value="0" min="0">
             <button onclick="increaseQuantity()">+</button>
         </div>
 
-        <button onclick="addToOrder('Tiger', 50000)">THÊM VÀO GIỎ HÀNG</button>
+        <button onclick="addToOrder('Bún chả', 50000)">THÊM VÀO GIỎ HÀNG</button>
     </div>
 
-    <script src="scripts/order.js"></script>
+    <script>
+        function increaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById('quantity');
+            if (quantityInput.value > 0) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+
+        function addToOrder(name, price) {
+            const quantityInput = document.getElementById('quantity');
+            const quantity = parseInt(quantityInput.value);
+
+            // Kiểm tra số lượng trước khi thêm vào giỏ hàng
+            if (quantity <= 0) {
+                alert("Vui lòng chọn số lượng lớn hơn 0!");
+                return;
+            }
+
+            // Lấy giỏ hàng từ localStorage hoặc khởi tạo một mảng mới
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Kiểm tra xem món đã có trong giỏ hàng chưa
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+            if (existingItemIndex > -1) {
+                // Nếu có, cập nhật số lượng
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Nếu không có, thêm món mới vào giỏ hàng
+                cart.push({ name: name, price: price, quantity: quantity });
+            }
+
+            // Lưu lại giỏ hàng vào localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert(`${quantity} x ${name} đã được thêm vào giỏ hàng!`);
+        }
+    </script>
+    <script src="../scripts/order.js"></script>
 </body>
 </html>
