@@ -15,20 +15,19 @@ function submitOrder() {
         
         // Thay các entry ID bằng ID của trường trên Google Form tương ứng
         
-        formData.append('entry.77411834', item.name); // Thay XXXXXX bằng entry ID của trường tên món ăn
-        formData.append('entry.1357572145', item.quantity); // Thay YYYYYY bằng entry ID của trường số lượng
-        formData.append('entry.1433881729', item.quantity); // Thay YYYYYY
-        formData.append('entry.974872402', item.quantity); // Thay YYYYYY
-        formData.append('entry.687928994', item.quantity);
-        formData.append('entry.1698670265', item.quantity);
-        formData.append('entry.1740240441', item.quantity);
-        formData.append('entry.701833790', item.quantity);
-        formData.append('entry.2145223647', item.quantity);
-        formData.append('entry.261073239', item.quantity);
-        formData.append('entry.885982600', item.quantity);
+        formData.append('entry.77411834', item.phoneNumber); // Thay XXXXXX bằng entry ID của trường tên món ăn
+        formData.append('entry.1357572145', item.tableNumber); // Thay YYYYYY bằng entry ID của trường số lượng
+        formData.append('entry.1433881729', item.customerName); // Thay YYYYYY
+        formData.append('entry.974872402', item.quantity_pho); // Thay YYYYYY
+        formData.append('entry.687928994', item.quantity_buncha);
+        formData.append('entry.1698670265', item.quantity_comtam);
+        formData.append('entry.1740240441', item.quantity_goicuon);
+        formData.append('entry.701833790', item.quantity_sinhtobo);
+        formData.append('entry.2145223647', item.quantity_camep);
+        formData.append('entry.261073239', item.quantit_bia);
+        formData.append('entry.885982600', item.quantity_cafe);
 
 
-        
 
         fetch(formUrl, {
             method: 'POST',
